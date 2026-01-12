@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+  --color-furious-primary: #EF4444;
+  --color-furious-bg: #111827; /* Dark charcoal/black */
+  --color-furious-text: #FFFFFF;
+
+  --font-furious: "Inter", sans-serif;
+
+  --radius-furious-none: 0;
+  --radius-furious-sm: 0.125rem;
+}

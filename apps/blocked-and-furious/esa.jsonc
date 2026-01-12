@@ -1,0 +1,9 @@
+{
+  "name": "icy-voice-4333",
+  "assets": {
+    "directory": "./dist"
+  },
+  "dev": {
+    "port": 18080
+  }
+}
