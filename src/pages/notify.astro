@@ -3,43 +3,48 @@ import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout>
-  <main class="bg-furious-bg text-furious-text min-h-screen flex flex-col font-furious p-4">
-    <div class="container mx-auto flex-1 flex flex-col justify-center">
+  <main class="bg-furious-bg text-furious-text h-dvh overflow-hidden flex flex-col font-furious p-4">
+    <div class="container mx-auto flex-1 flex flex-col justify-center min-h-0">
       <!-- Header -->
-      <header class="text-center py-8">
-        <div class="text-6xl mb-4">🚗💢</div>
-        <h1 class="text-3xl font-black uppercase tracking-tight text-furious-primary">你挡住我了！</h1>
-        <p class="text-sm opacity-60 mt-2">请立即挪车</p>
+      <header class="text-center py-4 shrink-0">
+        <div class="text-5xl mb-2">🚗💢</div>
+        <h1 class="text-2xl font-black uppercase tracking-tight text-furious-primary">你挡住我了！</h1>
+        <p class="text-xs opacity-60 mt-1">请立即挪车</p>
       </header>
 
       <!-- Message Form -->
-      <section class="flex-1 flex flex-col gap-4 max-w-2xl mx-auto w-full">
-        <label class="block">
-          <span class="text-sm font-bold uppercase tracking-wide opacity-80 mb-2 block"> 📝 留言给车主 </span>
+      <section class="flex-1 flex flex-col gap-3 max-w-2xl mx-auto w-full min-h-0 justify-center">
+        <label class="flex flex-col min-h-0 shrink-0">
+          <span class="text-sm font-bold uppercase tracking-wide opacity-80 mb-2 block shrink-0"> 📝 留言给车主 </span>
           <textarea
             id="message"
-            class="w-full h-40 bg-white/10 border-2 border-furious-primary/50 text-furious-text p-4 text-base resize-none focus:outline-none focus:border-furious-primary placeholder:text-white/30"
+            class="w-full h-32 bg-white/10 border-2 border-furious-primary/50 text-furious-text p-4 text-base resize-none focus:outline-none focus:border-furious-primary placeholder:text-white/30 rounded-lg"
             placeholder="例如：您好，您的车挡住了我的车道，麻烦尽快挪一下，谢谢！"></textarea>
         </label>
 
         <!-- Quick Messages -->
-        <div class="flex flex-wrap gap-2">
-          <button class="quick-msg bg-white/10 px-3 py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors"> 🚨 紧急！ </button>
-          <button class="quick-msg bg-white/10 px-3 py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors"> 🙏 麻烦您了 </button>
-          <button class="quick-msg bg-white/10 px-3 py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors"> ⏰ 我赶时间 </button>
+        <div class="flex flex-wrap gap-2 shrink-0">
+          <button class="quick-msg bg-white/10 px-3 py-2 text-sm border border-white/20 hover:bg-white/20 transition-colors rounded-lg flex-1 text-center whitespace-nowrap"> 🚨 紧急！ </button>
+          <button class="quick-msg bg-white/10 px-3 py-2 text-sm border border-white/20 hover:bg-white/20 transition-colors rounded-lg flex-1 text-center whitespace-nowrap"> 🙏 麻烦您了 </button>
+          <button class="quick-msg bg-white/10 px-3 py-2 text-sm border border-white/20 hover:bg-white/20 transition-colors rounded-lg flex-1 text-center whitespace-nowrap"> ⏰ 我赶时间 </button>
         </div>
 
         <!-- Location Map -->
-        <div id="map-container" class="hidden mt-4 rounded-xl overflow-hidden border-2 border-furious-primary/30 h-48 relative">
+        <div id="map-container" class="hidden mt-1 rounded-xl overflow-hidden border-2 border-furious-primary/30 h-64 shrink-0 relative transition-all duration-300">
           <iframe id="map-frame" class="w-full h-full border-0" title="Location Map"></iframe>
           <div class="absolute bottom-1 right-1 bg-black/50 text-white text-[10px] px-1 rounded">当前位置</div>
         </div>
       </section>
 
       <!-- Send Button -->
-      <footer class="py-6 max-w-2xl mx-auto w-full">
-        <button id="sendBtn" class="w-full bg-furious-primary text-white font-black text-xl py-4 uppercase tracking-wider hover:bg-red-600 active:scale-95 transition-all"> 📣 发送通知 </button>
-        <p class="text-center text-xs opacity-40 mt-4">点击后将立即通知车主</p>
+      <footer class="py-4 max-w-2xl mx-auto w-full shrink-0">
+        <button
+          id="sendBtn"
+          class="w-full bg-furious-primary text-white font-black text-xl py-4 rounded-xl uppercase tracking-wider hover:bg-red-600 active:scale-95 transition-all shadow-lg shadow-furious-primary/30"
+        >
+          📣 发送通知
+        </button>
+        <p class="text-center text-xs opacity-40 mt-3">点击后将立即通知车主</p>
       </footer>
     </div>
   </main>
