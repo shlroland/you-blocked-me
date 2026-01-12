@@ -7,12 +7,6 @@ settings:
 importers:
 
   .:
-    devDependencies:
-      esa-cli:
-        specifier: ^1.0.3
-        version: 1.0.3(@types/node@25.0.6)(react@18.3.1)(vitest@2.1.9(@types/node@25.0.6)(less@4.5.1)(lightningcss@1.30.2))
-
-  apps/blocked-and-furious:
     dependencies:
       '@tailwindcss/vite':
         specifier: ^4.1.18
@@ -27,20 +21,6 @@ importers:
       esa-cli:
         specifier: ^1.0.3
         version: 1.0.3(@types/node@25.0.6)(react@18.3.1)(vitest@2.1.9(@types/node@25.0.6)(less@4.5.1)(lightningcss@1.30.2))
-
-  apps/calm-and-blocking:
-    dependencies:
-      '@tailwindcss/vite':
-        specifier: ^4.1.18
-        version: 4.1.18(vite@6.4.1(@types/node@25.0.6)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2))
-      astro:
-        specifier: ^5.16.8
-        version: 5.16.8(@types/node@25.0.6)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(rollup@4.55.1)(typescript@5.9.3)
-      tailwindcss:
-        specifier: ^4.1.18
-        version: 4.1.18
-
-  apps/peace-maker: {}
 
 packages:
 

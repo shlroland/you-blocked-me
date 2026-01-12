@@ -1,19 +1,20 @@
 {
-  "name": "you-blocked-me",
+  "name": "blocked-and-furious",
   "version": "1.0.0",
   "private": true,
-  "description": "",
-  "main": "index.js",
+  "module": "true",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "esa-cli": "^1.0.3"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.8",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "esa-cli": "^1.0.3"
   }
 }
