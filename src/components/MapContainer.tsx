@@ -7,7 +7,7 @@ export default function MapContainer() {
 
   useEffect(() => {
     ;(window as any)._AMapSecurityConfig = {
-      serviceHost: 'http://localhost:8787/_AMapService',
+      serviceHost: import.meta.env.PROD ? '/_AMapService' : 'http://localhost:8787/_AMapService',
     }
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -67,7 +67,7 @@ export default function MapContainer() {
   // }
 
   return (
-    <div id="map-container" className="mt-1 rounded-xl overflow-hidden border-2 border-furious-primary/30 h-56 shrink-0 relative transition-all duration-300">
+    <div id="map-container" className="mt-1 rounded-xl overflow-hidden border-2 border-furious-primary/30 short:h-36 h-48  shrink-0 relative transition-all duration-300">
       <div id="map-frame" className="w-full h-full border-0" title="Location Map" />
       <div className="absolute bottom-1 right-1 bg-black/50 text-white text-[10px] px-1 rounded">当前位置</div>
     </div>

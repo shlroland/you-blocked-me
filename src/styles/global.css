@@ -2,7 +2,8 @@
 
 @theme {
   --color-furious-primary: #EF4444;
-  --color-furious-bg: #111827; /* Dark charcoal/black */
+  --color-furious-bg: #111827;
+  /* Dark charcoal/black */
   --color-furious-text: #FFFFFF;
 
   --font-furious: "Inter", sans-serif;
@@ -16,9 +17,11 @@
   --color-calm-text: #64748B;
 
   --font-calm: "Outfit", sans-serif;
-  
+
   --radius-calm-container: 2rem;
 }
+
+@custom-variant short (@media (height <=700px));
 
 .custom-content-marker {
   position: relative;
@@ -47,6 +50,6 @@
   cursor: pointer;
 }
 
-.custom-content-marker .close-btn:hover{
+.custom-content-marker .close-btn:hover {
   background: #666;
 }

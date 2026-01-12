@@ -7,10 +7,10 @@ import MapContainer from '../components/MapContainer'
   <main class="bg-furious-bg text-furious-text h-dvh overflow-hidden flex flex-col font-furious p-4">
     <div class="container mx-auto flex-1 flex flex-col justify-center min-h-0">
       <!-- Header -->
-      <header class="text-center py-4 shrink-0">
-        <div class="text-5xl mb-2">🚗💢</div>
-        <h1 class="text-2xl font-black uppercase tracking-tight text-furious-primary">你挡住我了！</h1>
-        <p class="text-xs opacity-60 mt-1">请立即挪车</p>
+      <header class="text-center py-4 short:py-2 shrink-0">
+        <div class="text-6xl short:text-5xl mb-2 short:mb-1">🚗💢</div>
+        <h1 class="text-3xl short:text-2xl font-black uppercase tracking-tight text-furious-primary">你挡住我了！</h1>
+        <p class="text-xl short:text-lg opacity-60 mt-1">请立即挪车</p>
       </header>
 
       <!-- Message Form -->
@@ -19,15 +19,21 @@ import MapContainer from '../components/MapContainer'
           <span class="text-sm font-bold uppercase tracking-wide opacity-80 mb-2 block shrink-0"> 📝 留言给车主 </span>
           <textarea
             id="message"
-            class="w-full h-32 bg-white/10 border-2 border-furious-primary/50 text-furious-text p-4 text-base resize-none focus:outline-none focus:border-furious-primary placeholder:text-white/30 rounded-lg"
+            class="w-full h-40 short:h-24 bg-white/10 border-2 border-furious-primary/50 text-furious-text p-4 short:p-2 text-base resize-none focus:outline-none focus:border-furious-primary placeholder:text-white/30 rounded-lg"
             placeholder="例如：您好，您的车挡住了我的车道，麻烦尽快挪一下，谢谢！"></textarea>
         </label>
 
         <!-- Quick Messages -->
         <div class="flex flex-wrap gap-2 shrink-0">
-          <button class="quick-msg bg-white/10 px-3 py-2 text-sm border border-white/20 hover:bg-white/20 transition-colors rounded-lg flex-1 text-center whitespace-nowrap"> 🚨 紧急！ </button>
-          <button class="quick-msg bg-white/10 px-3 py-2 text-sm border border-white/20 hover:bg-white/20 transition-colors rounded-lg flex-1 text-center whitespace-nowrap"> 🙏 麻烦您了 </button>
-          <button class="quick-msg bg-white/10 px-3 py-2 text-sm border border-white/20 hover:bg-white/20 transition-colors rounded-lg flex-1 text-center whitespace-nowrap"> ⏰ 我赶时间 </button>
+          <button class="quick-msg bg-white/10 px-3 py-2 short:py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors rounded-lg flex-1 text-center whitespace-nowrap">
+            🚨 紧急！
+          </button>
+          <button class="quick-msg bg-white/10 px-3 py-2 short:py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors rounded-lg flex-1 text-center whitespace-nowrap">
+            🙏 麻烦您了
+          </button>
+          <button class="quick-msg bg-white/10 px-3 py-2 short:py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors rounded-lg flex-1 text-center whitespace-nowrap">
+            ⏰ 我赶时间
+          </button>
         </div>
 
         <!-- Location Map -->
@@ -35,10 +41,10 @@ import MapContainer from '../components/MapContainer'
       </section>
 
       <!-- Send Button -->
-      <footer class="py-4 max-w-2xl mx-auto w-full shrink-0">
+      <footer class="py-4 short:py-2 max-w-2xl mx-auto w-full shrink-0">
         <button
           id="sendBtn"
-          class="w-full bg-furious-primary text-white font-black text-xl py-4 rounded-xl uppercase tracking-wider hover:bg-red-600 active:scale-95 transition-all shadow-lg shadow-furious-primary/30"
+          class="w-full bg-furious-primary text-white font-black text-xl short:text-lg py-4 short:py-3 rounded-xl uppercase tracking-wider hover:bg-red-600 active:scale-95 transition-all shadow-lg shadow-furious-primary/30"
         >
           📣 发送通知
         </button>
