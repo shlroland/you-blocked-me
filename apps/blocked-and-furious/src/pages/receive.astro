@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+// Get the notification key from URL query params
+const url = new URL(Astro.request.url)
+const notificationKey = url.searchParams.get('key') || 'demo-key'
+---
+
+<Layout>
+  <main class="bg-calm-bg text-calm-text min-h-screen flex flex-col items-center justify-center font-calm p-4">
+    <div class="container mx-auto flex items-center justify-center min-h-screen">
+      <div class="bg-white rounded-calm-container shadow-sm p-12 max-w-lg w-full text-center">
+        <div class="inline-block bg-calm-primary text-white rounded-full px-6 py-2 mb-8 text-sm font-medium tracking-wide">📬 收到通知</div>
+
+        <h1 class="text-4xl font-light text-slate-800 mb-6 tracking-wide">不着急。</h1>
+
+        <!-- Loading state -->
+        <div id="loading" class="text-lg leading-relaxed mb-10 opacity-80">
+          <div class="animate-pulse">正在加载通知内容...</div>
+        </div>
+
+        <!-- Message content (hidden initially) -->
+        <div id="messageContent" class="hidden">
+          <p id="messageText" class="text-lg leading-relaxed mb-10 opacity-80"></p>
+
+          <button class="bg-calm-primary text-white text-lg font-medium py-4 px-10 rounded-calm-lg hover:opacity-90 transition-opacity w-full"> 等会儿再说 </button>
+        </div>
+
+        <div class="mt-8 text-xs text-calm-text opacity-40">
+          通知 ID: <span id="notificationId" data-key={notificationKey}>{notificationKey}</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Simulate async KV fetch with setTimeout
+  async function fetchNotificationMessage(key: string): Promise<string> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // Mock data - in the future this will be fetched from KV storage
+        const mockMessages: Record<string, string> = {
+          'demo-key': '有人说你的车挡住了他们。有空的时候可以去看看，或者不看也行，随意。',
+          'urgent-001': '🚨 紧急！您的车严重阻碍了交通，请立即处理！',
+          'polite-002': '您好，您的车挡住了我的车道，麻烦尽快挪一下，谢谢！🙏',
+        }
+
+        const message = mockMessages[key] || '有人通知你挪车，但没有留下具体信息。'
+        resolve(message)
+      }, 1500) // Simulate 1.5s network delay
+    })
+  }
+
+  // Load message on page load
+  ;(async () => {
+    try {
+      // Get notification key from data attribute
+      const notificationKeyElement = document.getElementById('notificationId')
+      const notificationKey = notificationKeyElement?.getAttribute('data-key') || 'demo-key'
+
+      const message = await fetchNotificationMessage(notificationKey)
+
+      // Hide loading, show content
+      const loadingEl = document.getElementById('loading')
+      const contentEl = document.getElementById('messageContent')
+      const messageEl = document.getElementById('messageText')
+
+      if (loadingEl) loadingEl.classList.add('hidden')
+      if (contentEl) contentEl.classList.remove('hidden')
+      if (messageEl) messageEl.textContent = message
+    } catch (error) {
+      console.error('Failed to load notification:', error)
+      const loadingEl = document.getElementById('loading')
+      if (loadingEl) {
+        loadingEl.innerHTML = '<div class="text-red-500">加载失败，请刷新重试</div>'
+      }
+    }
+  })()
+</script>

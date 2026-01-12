@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout>
+  <main class="bg-furious-bg text-furious-text min-h-screen flex flex-col font-furious p-4">
+    <div class="container mx-auto flex-1 flex flex-col justify-center">
+      <!-- Header -->
+      <header class="text-center py-8">
+        <div class="text-6xl mb-4">🚗💢</div>
+        <h1 class="text-3xl font-black uppercase tracking-tight text-furious-primary">你挡住我了！</h1>
+        <p class="text-sm opacity-60 mt-2">请立即挪车</p>
+      </header>
+
+      <!-- Message Form -->
+      <section class="flex-1 flex flex-col gap-4 max-w-2xl mx-auto w-full">
+        <label class="block">
+          <span class="text-sm font-bold uppercase tracking-wide opacity-80 mb-2 block"> 📝 留言给车主 </span>
+          <textarea
+            id="message"
+            class="w-full h-40 bg-white/10 border-2 border-furious-primary/50 text-furious-text p-4 text-base resize-none focus:outline-none focus:border-furious-primary placeholder:text-white/30"
+            placeholder="例如：您好，您的车挡住了我的车道，麻烦尽快挪一下，谢谢！"></textarea>
+        </label>
+
+        <!-- Quick Messages -->
+        <div class="flex flex-wrap gap-2">
+          <button class="quick-msg bg-white/10 px-3 py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors"> 🚨 紧急！ </button>
+          <button class="quick-msg bg-white/10 px-3 py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors"> 🙏 麻烦您了 </button>
+          <button class="quick-msg bg-white/10 px-3 py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors"> ⏰ 我赶时间 </button>
+        </div>
+      </section>
+
+      <!-- Send Button -->
+      <footer class="py-6 max-w-2xl mx-auto w-full">
+        <button id="sendBtn" class="w-full bg-furious-primary text-white font-black text-xl py-4 uppercase tracking-wider hover:bg-red-600 active:scale-95 transition-all"> 📣 发送通知 </button>
+        <p class="text-center text-xs opacity-40 mt-4">点击后将立即通知车主</p>
+      </footer>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Quick message buttons
+  document.querySelectorAll('.quick-msg').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const textarea = document.getElementById('message') as HTMLTextAreaElement
+      const text = btn.textContent?.trim() || ''
+      textarea.value = textarea.value ? `${textarea.value} ${text}` : text
+      textarea.focus()
+    })
+  })
+
+  // Send button
+  document.getElementById('sendBtn')?.addEventListener('click', () => {
+    const textarea = document.getElementById('message') as HTMLTextAreaElement
+    const message = textarea.value.trim()
+
+    if (!message) {
+      alert('请输入留言内容 📝')
+      return
+    }
+
+    // TODO: Implement actual notification sending
+    alert(`通知已发送！🚀\n\n留言内容：${message}`)
+  })
+</script>

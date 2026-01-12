@@ -9,4 +9,14 @@
 
   --radius-furious-none: 0;
   --radius-furious-sm: 0.125rem;
+
+  /* Calm theme variables */
+  --color-calm-bg: #F0F9FF;
+  --color-calm-primary: #BFDBFE;
+  --color-calm-text: #64748B;
+
+  --font-calm: "Outfit", sans-serif;
+  
+  --radius-calm-lg: 1.5rem;
+  --radius-calm-container: 2rem;
 }
