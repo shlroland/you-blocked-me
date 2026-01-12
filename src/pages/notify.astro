@@ -28,6 +28,12 @@ import Layout from '../layouts/Layout.astro'
           <button class="quick-msg bg-white/10 px-3 py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors"> 🙏 麻烦您了 </button>
           <button class="quick-msg bg-white/10 px-3 py-1 text-sm border border-white/20 hover:bg-white/20 transition-colors"> ⏰ 我赶时间 </button>
         </div>
+
+        <!-- Location Map -->
+        <div id="map-container" class="hidden mt-4 rounded-xl overflow-hidden border-2 border-furious-primary/30 h-48 relative">
+          <iframe id="map-frame" class="w-full h-full border-0" title="Location Map"></iframe>
+          <div class="absolute bottom-1 right-1 bg-black/50 text-white text-[10px] px-1 rounded">当前位置</div>
+        </div>
       </section>
 
       <!-- Send Button -->
@@ -40,6 +46,8 @@ import Layout from '../layouts/Layout.astro'
 </Layout>
 
 <script>
+  import { wgs84ToGcj02 } from '../utils'
+
   // Quick message buttons
   document.querySelectorAll('.quick-msg').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -63,4 +71,37 @@ import Layout from '../layouts/Layout.astro'
     // TODO: Implement actual notification sending
     alert(`通知已发送！🚀\n\n留言内容：${message}`)
   })
+
+  // Get location and show map
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords
+        console.log('Latitude:', latitude)
+        console.log('Longitude:', longitude)
+
+        // Convert to GCJ-02 for Amap
+        const gcj = wgs84ToGcj02(latitude, longitude)
+
+        // Show map
+        const mapContainer = document.getElementById('map-container')
+        const mapFrame = document.getElementById('map-frame') as HTMLIFrameElement
+
+        if (mapContainer && mapFrame) {
+          // Using Amap URI API for a simple marker map
+          // Note: This URL might prompt to open the app on mobile, or show a web view page.
+          // For pure embedded view without app prompt interference, simple static maps are better but require a key.
+          // The uri.amap.com/marker is a good fallback for interactive web view.
+          mapFrame.src = `https://uri.amap.com/marker?position=${gcj.lng},${gcj.lat}&name=My%20Location&src=mypage&coordinate=gaode&callnative=0`
+          mapContainer.classList.remove('hidden')
+        }
+      },
+      (error) => {
+        console.error('Error getting location:', error)
+      },
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    )
+  } else {
+    console.error('Geolocation is not supported by this browser.')
+  }
 </script>

@@ -3,7 +3,10 @@
   "assets": {
     "directory": "./dist"
   },
+  "entry": "src/functions/index.ts",
   "dev": {
     "port": 18080
-  }
+  },
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm build"
 }
