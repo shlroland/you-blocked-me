@@ -1,0 +1,14 @@
+name = "blocked-and-furious-worker"
+main = "src/functions/index.ts"
+compatibility_date = "2024-01-01"
+
+# KV Namespace bindings
+kv_namespaces = [
+  # Replace with actual ID when deploying, or use local simulation
+  { binding = "kv", id = "MOVE_CAR_STATUS", preview_id = "MOVE_CAR_STATUS_PREVIEW" }
+]
+
+# Environment variables are loaded from .env locally
+# To access them via c.env in Hono
+[vars]
+# AMAP_SECURITY_KEY will be loaded from .env

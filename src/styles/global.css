@@ -17,6 +17,36 @@
 
   --font-calm: "Outfit", sans-serif;
   
-  --radius-calm-lg: 1.5rem;
   --radius-calm-container: 2rem;
+}
+
+.custom-content-marker {
+  position: relative;
+  width: 25px;
+  height: 34px;
+}
+
+.custom-content-marker img {
+  width: 100%;
+  height: 100%;
+}
+
+.custom-content-marker .close-btn {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  width: 15px;
+  height: 15px;
+  font-size: 12px;
+  background: #ccc;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+  line-height: 15px;
+  box-shadow: -1px 1px 1px rgba(10, 10, 10, .2);
+  cursor: pointer;
+}
+
+.custom-content-marker .close-btn:hover{
+  background: #666;
 }

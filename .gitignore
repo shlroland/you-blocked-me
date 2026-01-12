@@ -25,3 +25,5 @@ pnpm-debug.log*
 
 # dev specific
 .dev/
+
+.wrangler/
