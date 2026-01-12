@@ -27,8 +27,4 @@ async function handleRequest(request: Request) {
   return new Response('Not Found', { status: 404 });
 }
 
-export default {
-  async fetch(request: Request) {
-    return handleRequest(request);
-  }
-};
+export { handler as default } from './api/hono';
