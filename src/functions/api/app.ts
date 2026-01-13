@@ -38,9 +38,6 @@ let kvInstance: EdgeKV | null = null;
 const getKV = (c: Context) => {
   if (kvInstance) return kvInstance;
 
-  // @ts-expect-error have alert
-  console.alert('env(c).ENVIRONMENT', env(c).ENVIRONMENT)
-
   if (env(c).ENVIRONMENT === 'development') {
     kvInstance = new MockEdgeKV({ namespace: "you-blocked-me" }) as unknown as EdgeKV;
   } else {
@@ -109,10 +106,9 @@ export const app = new Hono().basePath('/api').get("/hello", c => c.text('hello 
       }
 
       const sendKey = env(c).SERVER3_SEND_KEY
-      // @ts-expect-error have alert
-      console.alert('SERVER3_SEND_KEY', env(c).SERVER3_SEND_KEY)
+
       if (!sendKey) {
-        return c.json({ success: false, error: 'SERVER3_SEND_KEY is not defined' }, 500);
+        return c.json({ success: false, error: 'SERVER3_SEND_KEY is not defined' + JSON.stringify(env(c)), }, 500);
       }
 
       const server3Url = `https://14776.push.ft07.com/send/${sendKey}.send`
