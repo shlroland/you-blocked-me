@@ -7,6 +7,6 @@
   "dev": {
     "port": 18080
   },
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --prod",
   "buildCommand": "pnpm build"
 }

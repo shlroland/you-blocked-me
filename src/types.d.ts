@@ -9,3 +9,11 @@ declare class EdgeKV {
   put(key: string, value: string | ArrayBuffer | ReadableStream, options?: any): Promise<void>;
   delete(key: string): Promise<void>;
 }
+
+interface CacheInterface {
+  put(key: string | Request, value: Response): Promise<void>
+  get(key: string | Request): Promise<Response | undefined>
+  delete(key: string | Request): Promise<boolean>
+}
+
+declare var cache: CacheInterface;
