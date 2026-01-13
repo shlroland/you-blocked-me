@@ -3,10 +3,10 @@
   "assets": {
     "directory": "./dist"
   },
-  "entry": "src/functions/index.ts",
+  "entry": "dist-worker/index.mjs",
   "dev": {
     "port": 18080
   },
-  "installCommand": "pnpm install --prod",
-  "buildCommand": "pnpm build"
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm build && pnpm build:worker"
 }

@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "worker:dev": "wrangler dev"
+    "worker:dev": "wrangler dev",
+    "build:worker": "vite build -c vite.config.worker.ts"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
@@ -25,6 +26,9 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
+    "@types/node": "^25.0.8",
+    "dotenv": "^17.2.3",
+    "vite": "^7.3.1",
     "wrangler": "^4.58.0"
   }
 }

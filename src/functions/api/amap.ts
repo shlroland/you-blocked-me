@@ -1,6 +1,4 @@
-import { Hono, type HonoRequest } from "hono";
-import { env } from "hono/adapter";
-// import { env } from "hono/adapter";
+import { Hono } from "hono";
 
 export const amapRoute = new Hono().all('/_AMapService/*', async (c) => {
   const url = new URL(c.req.url);
@@ -19,7 +17,7 @@ export const amapRoute = new Hono().all('/_AMapService/*', async (c) => {
   });
 
   // Append jscode (Security Key)
-  const jscode: any = env(c).AMAP_SECURITY_KEY || '请配置AMAP_SECURITY_KEY环境变量';
+  const jscode = process.env.AMAP_SECURITY_KEY || '请配置AMAP_SECURITY_KEY环境变量';
   console.log('jscode', jscode)
   targetUrl.searchParams.append('jscode', jscode);
 
