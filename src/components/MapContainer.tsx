@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react'
 import { wgs84ToGcj02 } from '../utils'
 import AMapLoader from '@amap/amap-jsapi-loader'
 
-export default function MapContainer() {
-  const [mapUrl, setMapUrl] = useState<string | null>(null)
-
+export default function MapContainer({ onLocationChange }: { onLocationChange?: (location: { lat: number; lng: number }) => void }) {
   useEffect(() => {
     ;(window as any)._AMapSecurityConfig = {
       serviceHost: import.meta.env.PROD ? '/_AMapService' : 'http://localhost:8787/_AMapService',
@@ -15,6 +13,7 @@ export default function MapContainer() {
           const { latitude, longitude } = position.coords
           console.log('Latitude:', latitude)
           console.log('Longitude:', longitude)
+          onLocationChange?.({ lat: latitude, lng: longitude })
 
           // Convert to GCJ-02 for Amap
           const gcj = wgs84ToGcj02(latitude, longitude)

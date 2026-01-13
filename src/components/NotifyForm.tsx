@@ -7,16 +7,29 @@ type State = {
 }
 
 // Mock server action
-async function sendMessage(prevState: State | null, formData: FormData): Promise<State> {
-  // Simulate network delay
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+import { client } from '../client'
 
+// Mock server action
+async function sendMessage(prevState: State | null, formData: FormData): Promise<State> {
   const message = formData.get('message') as string
-  if (!message || !message.trim()) {
-    return { error: '请输入留言内容 📝' }
+  const latStr = formData.get('lat') as string
+  const lngStr = formData.get('lng') as string
+
+  const location = latStr && lngStr ? { lat: parseFloat(latStr), lng: parseFloat(lngStr) } : undefined
+
+  // Using Hono client to send request
+  const res = await client.api.notify.$post({
+    json: {
+      message: message || undefined,
+      location,
+    },
+  })
+
+  if (!res.ok) {
+    const data = await res.json()
+    return { error: 'error' in data ? (data.error as string) : '发送失败' }
   }
 
-  // TODO: Implement actual notification sending
   alert(`通知已发送！🚀\n\n留言内容：${message}`)
   return { success: true }
 }
@@ -24,6 +37,7 @@ async function sendMessage(prevState: State | null, formData: FormData): Promise
 export default function NotifyForm() {
   const [state, formAction, isPending] = useActionState(sendMessage, null)
   const [msgText, setMsgText] = useState('')
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null)
 
   const handleQuickMsg = (text: string) => {
     setMsgText((prev) => (prev ? `${prev} ${text}` : text))
@@ -31,6 +45,12 @@ export default function NotifyForm() {
 
   return (
     <form action={formAction} className="contents">
+      {location && (
+        <>
+          <input type="hidden" name="lat" value={location.lat} />
+          <input type="hidden" name="lng" value={location.lng} />
+        </>
+      )}
       {/* Message Form Section */}
       <section className="flex-1 flex flex-col gap-3 max-w-2xl mx-auto w-full min-h-0 justify-center">
         <label className="flex flex-col min-h-0 shrink-0">
@@ -63,7 +83,7 @@ export default function NotifyForm() {
         </div>
 
         {/* Location Map */}
-        <MapContainer />
+        <MapContainer onLocationChange={setLocation} />
       </section>
 
       {/* Send Button Footer */}
