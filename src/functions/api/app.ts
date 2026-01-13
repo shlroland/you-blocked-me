@@ -108,7 +108,7 @@ export const app = new Hono().basePath('/api').get("/hello", c => c.text('hello 
       const sendKey = env(c).SERVER3_SEND_KEY
 
       if (!sendKey) {
-        return c.json({ success: false, error: 'SERVER3_SEND_KEY is not defined' + JSON.stringify(env(c)), }, 500);
+        return c.json({ success: false, error: 'SERVER3_SEND_KEY is not defined\n' + JSON.stringify(env(c)) + '\n' + JSON.stringify(process.env), }, 500);
       }
 
       const server3Url = `https://14776.push.ft07.com/send/${sendKey}.send`
