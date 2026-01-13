@@ -39,9 +39,9 @@ const getKV = (c: Context) => {
   if (kvInstance) return kvInstance;
 
   if (env(c).ENVIRONMENT === 'development') {
-    kvInstance = new MockEdgeKV({ namespace: "kv" }) as unknown as EdgeKV;
+    kvInstance = new MockEdgeKV({ namespace: "you-blocked-me" }) as unknown as EdgeKV;
   } else {
-    kvInstance = new EdgeKV({ namespace: "kv" });
+    kvInstance = new EdgeKV({ namespace: "you-blocked-me" });
   }
 
   return kvInstance;

@@ -10,7 +10,7 @@ declare const PHONE_NUMBER: string;
 // Helper to access KV. 
 // The user's index.ts showed `new EdgeKV({ namespace: "kv" })`.
 // We will use that pattern.
-const getKV = () => new EdgeKV({ namespace: "kv" });
+const getKV = () => new EdgeKV({ namespace: "you-blocked-me" });
 
 export async function handleNotify(request: Request, url: URL) {
   try {
