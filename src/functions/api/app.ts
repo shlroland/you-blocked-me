@@ -131,6 +131,8 @@ export const app = new Hono().basePath('/api').get("/hello", c => c.text('hello 
         })
       });
 
+      console.log('回复者的url', rawConfirmUrl)
+
       if (!response.ok) {
         console.error('Server3 Push Error', await response.text());
       }
