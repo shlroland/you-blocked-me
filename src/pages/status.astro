@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro'
+import StatusSection from '../components/StatusSection'
+---
+
+<Layout>
+  <main class="bg-furious-bg text-furious-text h-dvh overflow-hidden flex flex-col font-furious p-4">
+    <div class="container mx-auto flex-1 flex flex-col justify-center min-h-0">
+      <!-- Header -->
+      <header class="text-center py-4 short:py-2 shrink-0">
+        <div class="text-6xl short:text-5xl mb-2 short:mb-1">🚗⏳</div>
+        <h1 class="text-3xl short:text-2xl font-black uppercase tracking-tight text-furious-primary">等待确认</h1>
+        <p class="text-xl short:text-lg opacity-60 mt-1">通知已发送至车主</p>
+      </header>
+
+      <!-- Polling Section -->
+      <StatusSection client:only="react" />
+    </div>
+  </main>
+</Layout>

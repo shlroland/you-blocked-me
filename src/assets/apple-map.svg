@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="uuid-803d6a6a-6806-48e2-b7c6-1a245c156f98" xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 790 732.42">
+  <title>Apple Maps icon vector - Brandlogos.net</title>
+  <defs>
+    <clipPath id="uuid-748f7b55-9f40-4456-ae86-4374ae098999">
+      <rect x="67" y="212" width="512" height="512" rx="112" ry="112" style="fill:none;" />
+    </clipPath>
+    <linearGradient id="uuid-71e7bba8-a614-4dd5-9ec9-42fcdbfbb38f" x1="323" y1="726" x2="323"
+      y2="337" gradientTransform="translate(0 938) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7fed7d" />
+      <stop offset="1" stop-color="#2ed058" />
+    </linearGradient>
+    <clipPath id="uuid-755d75fd-3798-4f44-9a16-2a40471d0baa">
+      <rect x="381" y="212" width="198" height="205" style="fill:none;" />
+    </clipPath>
+    <linearGradient id="uuid-1665803c-4795-49a3-87a3-0d96949d5da3" x1="261" y1="741" x2="261"
+      y2="470" gradientTransform="translate(0 938) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0c91ff" />
+      <stop offset="1" stop-color="#0077f7" />
+    </linearGradient>
+    <linearGradient id="uuid-2c2d40d1-c4ed-4aab-909c-3de79c60f58a" x1="260" y1="538" x2="260"
+      y2="280" gradientTransform="translate(0 938) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0c91ff" />
+      <stop offset="1" stop-color="#017aff" />
+    </linearGradient>
+  </defs>
+  <g style="clip-path:url(#uuid-748f7b55-9f40-4456-ae86-4374ae098999);">
+    <rect x="326" y="601" width="253" height="123" style="fill:#fc0;" />
+    <rect x="67" y="212" width="512" height="389"
+      style="fill:url(#uuid-71e7bba8-a614-4dd5-9ec9-42fcdbfbb38f);" />
+    <rect x="67" y="400" width="132" height="324" style="fill:#f082ca;" />
+    <g style="clip-path:url(#uuid-755d75fd-3798-4f44-9a16-2a40471d0baa);">
+      <circle cx="585.5" cy="204.5" r="161.5" style="fill:none; stroke:#fff; stroke-width:86px;" />
+      <path
+        d="M585.5,333.32c71.15,0,128.83-57.68,128.83-128.83s-57.68-128.82-128.83-128.82-128.83,57.68-128.83,128.82,57.68,128.83,128.83,128.83ZM585.5,399c107.42,0,194.5-87.08,194.5-194.5S692.92,10,585.5,10s-194.5,87.08-194.5,194.5,87.08,194.5,194.5,194.5Z"
+        style="fill:#d2d1d6; fill-rule:evenodd;" />
+    </g>
+    <path
+      d="M338.8,205h-157v117.71c0,6.29-6.92,10.12-12.25,6.78l-100.29-62.78L0,369.76l546.85,362.66,69.26-106.05-277.32-185.96v-235.4Z"
+      style="fill:#f2f1f6;" />
+    <path d="M207,197h108v271h-108V197Z"
+      style="fill:url(#uuid-1665803c-4795-49a3-87a3-0d96949d5da3);" />
+    <path d="M185,468h153v256h-153v-256Z" style="fill:#eef0f6;" />
+    <circle cx="260" cy="529" r="119"
+      style="fill:url(#uuid-2c2d40d1-c4ed-4aab-909c-3de79c60f58a); stroke:#fff; stroke-width:20px;" />
+    <path
+      d="M272.22,458.17c-4.15-10.9-20.29-10.9-24.44,0l-45.84,125.2c-2.92,7.97,6.96,14.4,13.07,8.51l42.21-40.71c1.55-1.49,4-1.49,5.55,0l42.21,40.71c6.11,5.89,15.98-.54,13.07-8.51l-45.84-125.2Z"
+      style="fill:#fff;" />
+  </g>
+</svg>
