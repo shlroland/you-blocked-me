@@ -1,3 +1,4 @@
+import { env } from "../env";
 import { Hono } from "hono";
 
 export const amapRoute = new Hono().all('/_AMapService/*', async (c) => {
@@ -17,9 +18,11 @@ export const amapRoute = new Hono().all('/_AMapService/*', async (c) => {
   });
 
   // Append jscode (Security Key)
-  const jscode = process.env.AMAP_SECURITY_KEY || '请配置AMAP_SECURITY_KEY环境变量';
+  const jscode = env.AMAP_SECURITY_KEY || '请配置AMAP_SECURITY_KEY环境变量';
   console.log('jscode', jscode)
   targetUrl.searchParams.append('jscode', jscode);
+
+  console.log('targetUrl', targetUrl)
 
   // Use custom global cache
   const cacheKey = new Request(targetUrl.toString(), c.req.raw)

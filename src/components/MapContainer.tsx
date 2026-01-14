@@ -15,7 +15,10 @@ export default function MapContainer({
     ;(window as any)._AMapSecurityConfig = {
       serviceHost: import.meta.env.PROD ? '/_AMapService' : 'http://localhost:8787/_AMapService',
     }
-
+    AMapLoader.load({
+      key: '982216c931916da3e84ffbcc5b9203b3',
+      version: '2.0',
+    })
     const loadMap = (lat: number, lng: number, isRequester: boolean) => {
       const gcj = wgs84ToGcj02(lat, lng)
       AMapLoader.load({

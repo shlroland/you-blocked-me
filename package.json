@@ -8,7 +8,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "worker:dev": "wrangler dev",
+    "worker:dev": "pnpm run --parallel \"/^worker:dev:.*/\"",
+    "worker:dev:tsup": "tsup --watch",
+    "worker:dev:wrangler": "wrangler dev",
     "build:worker": "tsup"
   },
   "dependencies": {
@@ -28,6 +30,7 @@
   "devDependencies": {
     "@types/node": "^25.0.8",
     "dotenv": "^17.2.3",
+    "esa-cli": "1.0.4-beta.1",
     "tsup": "^8.5.1",
     "wrangler": "^4.58.0"
   }

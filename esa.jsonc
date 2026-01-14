@@ -5,7 +5,7 @@
   },
   "entry": "dist-worker/index.mjs",
   "dev": {
-    "port": 18080
+    "port": 8787
   },
   "installCommand": "pnpm install",
   "buildCommand": "pnpm build && pnpm build:worker"

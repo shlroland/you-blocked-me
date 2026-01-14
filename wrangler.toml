@@ -1,5 +1,5 @@
 name = "blocked-and-furious-worker"
-main = "src/functions/index.ts"
+main = "dist-worker/index.mjs"
 compatibility_date = "2024-01-01"
 
 # KV Namespace bindings

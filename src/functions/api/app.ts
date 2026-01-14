@@ -2,7 +2,7 @@ import { Hono, type Context } from 'hono';
 import { sValidator } from '@hono/standard-validator';
 import { type } from 'arktype';
 import { generateMapUrls } from '../../utils';
-import { env } from 'hono/adapter';
+import { env } from '../env';
 
 declare const BARK_URL: string;
 declare const PHONE_NUMBER: string;
@@ -38,7 +38,7 @@ let kvInstance: EdgeKV | null = null;
 const getKV = (c: Context) => {
   if (kvInstance) return kvInstance;
 
-  if (process.env.ENVIRONMENT === 'development') {
+  if (env.ENVIRONMENT === 'development') {
     kvInstance = new MockEdgeKV({ namespace: "you-blocked-me" }) as unknown as EdgeKV;
   } else {
     kvInstance = new EdgeKV({ namespace: "you-blocked-me" });
@@ -105,10 +105,10 @@ export const app = new Hono().basePath('/api').get("/hello", c => c.text('hello 
         await new Promise(resolve => setTimeout(resolve, 30000));
       }
 
-      const sendKey = process.env.SERVER3_SEND_KEY
+      const sendKey = env.SERVER3_SEND_KEY
 
       if (!sendKey) {
-        return c.json({ success: false, error: 'SERVER3_SEND_KEY is not defined\n' + JSON.stringify(process.env), }, 500);
+        return c.json({ success: false, error: 'SERVER3_SEND_KEY is not defined\n' + JSON.stringify(env), }, 500);
       }
 
       const server3Url = `https://14776.push.ft07.com/send/${sendKey}.send`

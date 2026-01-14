@@ -16,9 +16,9 @@ export default defineConfig({
   noExternal: [/.*/], // Bundle all dependencies into the single file
   define: {
     // Inject environment variables at build time
-    'process.env.AMAP_SECURITY_KEY': JSON.stringify(process.env.AMAP_SECURITY_KEY),
-    'process.env.SERVER3_SEND_KEY': JSON.stringify(process.env.SERVER3_SEND_KEY),
-    'process.env.ENVIRONMENT': JSON.stringify(process.env.ENVIRONMENT || 'production'),
+    '__WILL_REPLACE_AMAP_SECURITY_KEY': JSON.stringify(process.env.AMAP_SECURITY_KEY),
+    '__WILL_REPLACE_SERVER3_SEND_KEY': JSON.stringify(process.env.SERVER3_SEND_KEY),
+    '__WILL_REPLACE_ENVIRONMENT': JSON.stringify(process.env.ENVIRONMENT || 'production'),
   },
   // Ensure we get a single file output
   splitting: false,
