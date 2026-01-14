@@ -84,19 +84,21 @@ export const app = new Hono().basePath('/api').get("/hello", c => c.text('hello 
       if (message) notifyBody += `\n💬 留言: ${message}`;
 
       const kv = getKV(c);
+      const storageData: any = { message };
 
       if (location && location.lat && location.lng) {
         const urls = generateMapUrls(location.lat, location.lng);
         notifyBody += '\n📍 已附带位置信息，点击查看';
-
-        await kv.put(`req_loc_${uuid}`, JSON.stringify({
+        Object.assign(storageData, {
           lat: location.lat,
           lng: location.lng,
           ...urls
-        }), { expirationTtl: CONFIG.KV_TTL });
+        });
       } else {
         notifyBody += '\n⚠️ 未提供位置信息';
       }
+
+      await kv.put(`req_loc_${uuid}`, JSON.stringify(storageData), { expirationTtl: CONFIG.KV_TTL });
 
       await kv.put(`status_${uuid}`, 'waiting', { expirationTtl: 600 });
 
