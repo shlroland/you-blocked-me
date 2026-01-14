@@ -60,9 +60,9 @@ export function generateMapUrls(lat: number, lng: number) {
       android: `bdapp://map/marker?location=${bd.lat},${bd.lng}&title=位置&content=位置&src=and.baidu.openAPIdemo`,
     },
     google: {
-      web: `https://www.google.com/maps/search/?api=1&query=${gcj.lat},${gcj.lng}`,
-      ios: `comgooglemaps://?q=${gcj.lat},${gcj.lng}`,
-      android: `geo:${gcj.lat},${gcj.lng}?q=${gcj.lat},${gcj.lng}`,
+      web: `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`,
+      ios: `comgooglemaps://?q=${lat},${lng}`,
+      android: `geo:${lat},${lng}?q=${lat},${lng}`,
     },
     apple: {
       web: `https://maps.apple.com/?ll=${lat},${lng}&q=位置`,
