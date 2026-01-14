@@ -100,7 +100,9 @@ export default function NotifyForm() {
         </div>
 
         {/* Location Map */}
-        <MapContainer onLocationChange={setLocation} />
+        <div className="border-2 border-furious-primary/30 rounded-xl">
+          <MapContainer onLocationChange={setLocation} />
+        </div>
       </section>
 
       {/* Send Button Footer */}
@@ -108,7 +110,7 @@ export default function NotifyForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full bg-furious-primary text-white font-black text-xl short:text-lg py-4 short:py-3 rounded-xl uppercase tracking-wider hover:bg-red-600 active:scale-95 transition-all shadow-lg shadow-furious-primary/30 disabled:opacity-70 disabled:grayscale disabled:scale-100 cursor-pointer"
+          className="w-full bg-furious-primary text-white font-black text-xl short:text-lg py-4 short:py-3  uppercase tracking-wider hover:bg-red-600 active:scale-95 transition-all shadow-lg shadow-furious-primary/30 disabled:opacity-70 disabled:grayscale disabled:scale-100 cursor-pointer"
         >
           {isPending ? '🚀 发送中...' : '📣 发送通知'}
         </button>

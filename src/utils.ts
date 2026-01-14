@@ -35,10 +35,39 @@ function transformLng(x: number, y: number) {
   return ret;
 }
 
+export function gcj02ToBd09(lat: number, lng: number) {
+  const xPi = 3.14159265358979324 * 3000.0 / 180.0;
+  const z = Math.sqrt(lng * lng + lat * lat) + 0.00002 * Math.sin(lat * xPi);
+  const theta = Math.atan2(lat, lng) + 0.000003 * Math.cos(lng * xPi);
+  const bd_lng = z * Math.cos(theta) + 0.0065;
+  const bd_lat = z * Math.sin(theta) + 0.006;
+  return { lat: bd_lat, lng: bd_lng };
+}
+
 export function generateMapUrls(lat: number, lng: number) {
-  const gcj = wgs84ToGcj02(lat, lng);
+  const gcj = wgs84ToGcj02(lat, lng)
+  const bd = gcj02ToBd09(gcj.lat, gcj.lng)
+
   return {
-    amapUrl: `https://uri.amap.com/marker?position=${gcj.lng},${gcj.lat}&name=位置`,
-    appleUrl: `https://maps.apple.com/?ll=${gcj.lat},${gcj.lng}&q=位置`
-  };
+    amap: {
+      web: `https://uri.amap.com/marker?position=${gcj.lng},${gcj.lat}&name=位置`,
+      ios: `iosamap://viewMap?sourceApplication=you-blocked-me&poiname=位置&lat=${gcj.lat}&lon=${gcj.lng}&dev=0`,
+      android: `androidamap://viewMap?sourceApplication=you-blocked-me&poiname=位置&lat=${gcj.lat}&lon=${gcj.lng}&dev=0`,
+    },
+    bmap: {
+      web: `https://api.map.baidu.com/marker?location=${bd.lat},${bd.lng}&title=位置&content=位置&output=html`,
+      ios: `baidumap://map/marker?location=${bd.lat},${bd.lng}&title=位置&content=位置&src=ios.baidu.openAPIdemo`,
+      android: `bdapp://map/marker?location=${bd.lat},${bd.lng}&title=位置&content=位置&src=and.baidu.openAPIdemo`,
+    },
+    google: {
+      web: `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`,
+      ios: `comgooglemaps://?q=${lat},${lng}`,
+      android: `geo:${lat},${lng}?q=${lat},${lng}`,
+    },
+    apple: {
+      web: `https://maps.apple.com/?ll=${lat},${lng}&q=位置`,
+      ios: `maps://?ll=${lat},${lng}&q=位置`,
+      android: `geo:${lat},${lng}?q=${lat},${lng}`, // Android fallback to geo for apple link click
+    },
+  }
 }

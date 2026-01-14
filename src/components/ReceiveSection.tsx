@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
 import { client } from '../client'
 import MapContainer from './MapContainer'
+import { generateMapUrls } from '../utils'
+import amapIcon from '../assets/amap.svg'
+import bmapIcon from '../assets/bmap.svg'
+import googleIcon from '../assets/google-map.svg'
+import appleIcon from '../assets/apple-map.svg'
 
 export default function ReceiveSection() {
   const [requestId, setRequestId] = useState<string | null>(null)
@@ -100,6 +105,25 @@ export default function ReceiveSection() {
     )
   }
 
+  const mapUrlsData = requesterLocation ? generateMapUrls(requesterLocation.lat, requesterLocation.lng) : null
+
+  const getMapUrl = (mapId: string) => {
+    if (!mapUrlsData) return ''
+    // @ts-ignore
+    const data = mapUrlsData[mapId]
+    if (!data) return ''
+
+    if (typeof window !== 'undefined') {
+      const ua = navigator.userAgent.toLowerCase()
+      const isIos = /iphone|ipad|ipod/.test(ua)
+      const isAndroid = /android/.test(ua)
+
+      if (isIos) return data.ios || data.web
+      if (isAndroid) return data.android || data.web
+    }
+    return data.web
+  }
+
   return (
     <div className="flex-1 flex flex-col min-h-0 text-left">
       {message && (
@@ -109,18 +133,48 @@ export default function ReceiveSection() {
       )}
 
       {requesterLocation && (
-        <div className="flex-1 min-h-0 mb-4 overflow-hidden rounded-xl border-2 border-calm-primary/20">
-          <MapContainer markerLocation={requesterLocation} />
-        </div>
+        <>
+          <div className="flex-1 min-h-0 mb-4 overflow-hidden rounded-xl border-2 border-calm-primary/20">
+            <MapContainer markerLocation={requesterLocation} />
+          </div>
+          {/* External Map Buttons */}
+          <div className="flex justify-center gap-6 mb-6 shrink-0">
+            {[
+              { id: 'amap', name: '高德', icon: amapIcon },
+              { id: 'bmap', name: '百度', icon: bmapIcon },
+              { id: 'google', name: 'Google', icon: googleIcon },
+              { id: 'apple', name: 'Apple', icon: appleIcon },
+            ].map((mapItem) => {
+              const url = getMapUrl(mapItem.id)
+              return (
+                url && (
+                  <a
+                    key={mapItem.id}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-1.5 group no-underline transition-all active:scale-95"
+                    title={`在${mapItem.name}中打开`}
+                  >
+                    <div className="w-12 h-12 rounded-full bg-white shadow-md border border-slate-100 flex items-center justify-center p-2.5 group-hover:shadow-lg group-hover:-translate-y-0.5 transition-all">
+                      <img src={mapItem.icon.src} alt={mapItem.name} className="w-full h-full object-contain" />
+                    </div>
+                    <span className="text-[10px] text-slate-400 font-medium">{mapItem.name}</span>
+                  </a>
+                )
+              )
+            })}
+          </div>
+        </>
       )}
 
-      <p className="text-base leading-relaxed mb-4 opacity-80 shrink-0 text-center">{requesterLocation ? '对方在上述位置等待，请有空时前往处理。' : '对方正在等待，请有空时前往处理。'}</p>
+      <p className="text-base leading-relaxed mb-4 opacity-80 shrink-0 text-center">{requesterLocation ? '已经帮您生成了各个地图的导航链接，点击即可。' : '对方正在等待，请有空时前往处理。'}</p>
 
       {!confirmed ? (
         <button
           onClick={handleConfirm}
           disabled={confirming}
-          className="bg-calm-primary text-white text-lg font-medium py-3 px-8 rounded-calm-lg hover:opacity-90 transition-opacity w-full disabled:opacity-50 cursor-pointer shrink-0"
+          className="bg-calm-primary text-white text-lg font-medium py-3 px-8 rounded-xl hover:opacity-90 transition-opacity w-full disabled:opacity-50 cursor-pointer shrink-0"
         >
           {confirming ? '发送中...' : '我这就来'}
         </button>
