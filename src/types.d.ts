@@ -10,10 +10,10 @@ declare class EdgeKV {
   delete(key: string): Promise<void>;
 }
 
-interface CacheInterface {
+interface EsaCache {
   put(key: string | Request, value: Response): Promise<void>
   get(key: string | Request): Promise<Response | undefined>
   delete(key: string | Request): Promise<boolean>
 }
 
-declare var cache: CacheInterface;
+declare var cache: EsaCache;
