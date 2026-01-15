@@ -9,6 +9,8 @@ export const GeoPoint = S.Struct({
   lng: S.Number,
 })
 
+export type GeoPoint = typeof GeoPoint.Type
+
 const NullishGeoPoint = GeoPoint.pipe(S.NullOr).pipe(S.optionalWith({ default: () => null }))
 
 export const NotifyMessageInput = S.Struct({
