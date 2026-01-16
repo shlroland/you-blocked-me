@@ -837,6 +837,20 @@ export type KVNamespaceError =
   | KVNetworkError
   | KVNotSupportedError;
 
+export const KVNamespaceError = Schema.Union(
+  KVRateLimitError,
+  KVResponseTooLargeError,
+  KVJsonParseError,
+  KVInvalidKeyError,
+  KVInvalidValueError,
+  KVMetadataError,
+  KVExpirationError,
+  KVCacheTtlError,
+  KVBulkLimitError,
+  KVListLimitError,
+  KVNetworkError,
+  KVNotSupportedError,
+)
 
 /**
  * @since 1.0.0

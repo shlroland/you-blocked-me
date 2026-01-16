@@ -34,7 +34,7 @@
     "@cloudflare/workers-types": "^4.20260115.0",
     "@types/node": "^25.0.8",
     "dotenv": "^17.2.3",
-    "esa-cli": "1.0.4-beta.1",
+    "esa-cli": "1.0.4-beta.4",
     "tsup": "^8.5.1",
     "wrangler": "^4.58.0"
   }

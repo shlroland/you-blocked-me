@@ -9,7 +9,7 @@ export default defineConfig({
   format: ['esm'],
   outDir: 'dist-worker',
   clean: true,
-  minify: true,
+  // minify: true,
   bundle: true,
   dts: false,
   sourcemap: false,
@@ -19,7 +19,9 @@ export default defineConfig({
     '__WILL_REPLACE_AMAP_SECURITY_KEY': JSON.stringify(process.env.AMAP_SECURITY_KEY),
     '__WILL_REPLACE_SERVER3_SEND_KEY': JSON.stringify(process.env.SERVER3_SEND_KEY),
     '__WILL_REPLACE_ENVIRONMENT': JSON.stringify(process.env.ENVIRONMENT || 'production'),
+    // 'process.env.MSGPACKR_NATIVE_ACCELERATION_DISABLED': '"true"',
   },
+  platform: 'neutral',
   // Ensure we get a single file output
   splitting: false,
   treeshake: true,
