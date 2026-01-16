@@ -56,6 +56,10 @@ export class CacheUnknownError extends Schema.TaggedError<CacheUnknownError>(
   }
 }
 
+export const CacheError = Schema.Union(
+  Cache413Error,
+  CacheUnknownError,
+);
 
 export type CacheError = Cache413Error | CacheUnknownError;
 

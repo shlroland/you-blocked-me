@@ -2,7 +2,6 @@ import type { CacheStruct, CacheQueryOptions } from "./internal";
 import { CacheStorage } from '@cloudflare/workers-types'
 import * as Effect from 'effect/Effect';
 import * as Option from 'effect/Option';
-import { dual } from "effect/Function";
 import { CacheUnknownError, Cache413Error, Cache } from './internal';
 import { isError } from "effect/Predicate";
 import * as Layer from "effect/Layer";
@@ -69,21 +68,12 @@ export const make = (): CacheStruct => {
  * @since 1.0.0
  * @category layers
  */
-export const layer = (): Layer.Layer<CacheStruct> =>
-  Layer.succeed(Cache, make())
+export const layer = Layer.succeed(Cache, make())
 
 /**
  * @since 1.0.0
  * @category combinators
  */
-export const withCache: {
-  (): <A, E, R>(effect: Effect.Effect<A, E, R>) => Effect.Effect<A, E, R>;
-  <A, E, R>(
-    effect: Effect.Effect<A, E, R>,
-  ): Effect.Effect<A, E, R>;
-} = dual(
-  1,
-  <A, E, R>(
-    effect: Effect.Effect<A, E, R>,
-  ): Effect.Effect<A, E, R> => Effect.provideService(effect, Cache, make()),
-);
+export const withCache = <A, E, R>(
+  effect: Effect.Effect<A, E, R>,
+): Effect.Effect<A, E, R> => Effect.provideService(effect, Cache, make())

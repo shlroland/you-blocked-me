@@ -15,6 +15,7 @@ import {
   HttpServerResponse
 } from "@effect/platform";
 import * as EsaKVLayer from "./kv/esa";
+import * as Cache from "./cache/esa";
 import { AmapServiceApiLive } from "./movecar/amap-restful-live";
 
 class RpcLogger extends RpcMiddleware.Tag<RpcLogger>()("RpcLogger", {
@@ -70,6 +71,7 @@ const HealthCheckRouter = HttpLayerRouter.use((router) => {
 
 const AllRoutes = Layer.mergeAll(RpcRouter, HttpApiRouter, HealthCheckRouter).pipe(
   Layer.provide(Logger.pretty),
+  Layer.provide(Cache.layer),
 );
 
 const memoMap = Effect.runSync(Layer.makeMemoMap);
