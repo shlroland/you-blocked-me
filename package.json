@@ -36,6 +36,7 @@
     "dotenv": "^17.2.3",
     "esa-cli": "1.0.4-beta.4",
     "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
     "wrangler": "^4.58.0"
   }
 }

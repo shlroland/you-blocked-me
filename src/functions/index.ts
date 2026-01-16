@@ -33,7 +33,8 @@ async function handleRequest(request: Request) {
 // export { handler as default } from './api/hono';
 
 export default {
-  fetch: (req: Request, ctx: any) => {
+  fetch(req: Request, ctx: any) {
+    // console.alert("fetch", req.url);
     return handler(req, ctx);
   }
 }

@@ -12,7 +12,7 @@ export default defineConfig({
   // minify: true,
   bundle: true,
   dts: false,
-  sourcemap: false,
+  sourcemap: true,
   noExternal: [/.*/], // Bundle all dependencies into the single file
   define: {
     // Inject environment variables at build time

@@ -5,13 +5,17 @@ import * as RpcServer from "@effect/rpc/RpcServer";
 import * as Layer from "effect/Layer";
 import * as Effect from "effect/Effect";
 import * as Exit from "effect/Exit";
-import { MovecarRpcLive } from "./movecar/movecar-live";
+import { MovecarRpcLive } from "./movecar/movecar-rpc-live";
 import { MovecarRpc } from "./movecar/movecar-rpc";
+import { AmapServiceApi } from './movecar/amap-restful'
 import * as Logger from "effect/Logger";
 import {
-  FetchHttpClient
+  FetchHttpClient,
+  HttpServer,
+  HttpServerResponse
 } from "@effect/platform";
-import * as EsaLayer from "./kv/esa";
+import * as EsaKVLayer from "./kv/esa";
+import { AmapServiceApiLive } from "./movecar/amap-restful-live";
 
 class RpcLogger extends RpcMiddleware.Tag<RpcLogger>()("RpcLogger", {
   wrap: true,
@@ -40,31 +44,6 @@ const RpcLoggerLive = Layer.succeed(
   ),
 );
 
-// Create the RPC server layer
-// const RpcLayer = RpcServer.layer(MovecarRpc).pipe(Layer.provide(MovecarRpcLive))
-
-
-// export const RpcWebHandler = RpcServer.toHttpApp(MovecarRpc)
-// // Choose the protocol and serialization format
-// const HttpProtocol = RpcServer.layerProtocolHttp({
-//   path: "/rpc"
-// }).pipe(Layer.provide(RpcSerialization.layerNdjson))
-
-// // Create the main server layer
-// const Main = HttpRouter.Default.serve().pipe(
-//   Layer.provide(RpcLayer),
-//   Layer.provide(HttpProtocol),
-//   Layer.provide(BunHttpServer.layer({ port: 3000 }))
-// )
-
-// BunRuntime.runMain(Layer.launch(Main))
-
-// const handler = MovecarRpc.middleware(RpcLogger).pipe(
-//   RpcServer.toWebHandler({
-
-//   })
-// )
-
 const RpcRouter = RpcServer.layerHttpRouter({
   group: MovecarRpc.middleware(RpcLogger),
   path: "/api/rpc",
@@ -72,22 +51,42 @@ const RpcRouter = RpcServer.layerHttpRouter({
   spanPrefix: "rpc",
   disableFatalDefects: true,
 }).pipe(
-  Layer.provide(Logger.pretty),
   Layer.provide(MovecarRpcLive),
   Layer.provide(RpcLoggerLive),
   Layer.provide(RpcSerialization.layerNdjson),
 ).pipe(
   Layer.provide(FetchHttpClient.layer),
-  Layer.provide(EsaLayer.layer("you-blocked-me"))
+  Layer.provide(EsaKVLayer.layer("you-blocked-me"))
 ) as Layer.Layer<never, never, HttpLayerRouter.HttpRouter>
 
-const { handler, dispose } = HttpLayerRouter.toWebHandler(RpcRouter);
+const HttpApiRouter = HttpLayerRouter.addHttpApi(AmapServiceApi).pipe(
+  Layer.provide(AmapServiceApiLive),
+  Layer.provide(HttpServer.layerContext),
+);
 
-(globalThis as any).__EFFECT_RPC_SERVER_DISPOSE = dispose;
+const HealthCheckRouter = HttpLayerRouter.use((router) => {
+  return router.add("GET", "/api/health", () => HttpServerResponse.text("ok2"))
+})
 
-if ((globalThis as any).__EFFECT_RPC_SERVER_DISPOSE) {
-  (globalThis as any).__EFFECT_RPC_SERVER_DISPOSE();
+const AllRoutes = Layer.mergeAll(RpcRouter, HttpApiRouter, HealthCheckRouter).pipe(
+  Layer.provide(Logger.pretty),
+);
+
+const memoMap = Effect.runSync(Layer.makeMemoMap);
+
+const { handler, dispose } = HttpLayerRouter.toWebHandler(AllRoutes, { memoMap });
+
+const globalHmr = globalThis as unknown as {
+  __EFFECT_DISPOSE__?: () => Promise<void>;
+};
+if (globalHmr.__EFFECT_DISPOSE__) {
+  await globalHmr.__EFFECT_DISPOSE__();
+  globalHmr.__EFFECT_DISPOSE__ = undefined;
 }
+
+globalHmr.__EFFECT_DISPOSE__ = async () => {
+  await dispose();
+};
 
 export {
   handler
