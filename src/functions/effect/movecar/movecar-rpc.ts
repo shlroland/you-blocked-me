@@ -2,7 +2,7 @@ import * as Rpc from "@effect/rpc/Rpc";
 import * as RpcGroup from "@effect/rpc/RpcGroup";
 import * as S from 'effect/Schema'
 import {
-  CheckStatus, GeoPoint, NotificationNotFound, NotifyId,
+  CheckStatus, NotificationNotFound, NotifyId,
   NotifyMessageInput, AlertableError, Server3SendKeyNotFound, NotifyStorageData
 } from "./movecar-schema";
 import { KVNamespaceError } from "../kv/internal";
