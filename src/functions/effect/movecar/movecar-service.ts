@@ -100,7 +100,11 @@ export class MovecarService extends Effect.Service<MovecarService>()(
     const checkStatus = Effect.fn(function* (id: NotifyId) {
       const ownerConfirmId = createOwnerConfirmId(id)
       const result = yield* kv.get(ownerConfirmId)
-      return Option.isSome(result) ? CheckStatusEnum.Confirmed : CheckStatusEnum.Waiting
+      return Option.match(result, {
+        onNone: () => CheckStatusEnum.Waiting,
+        onSome: (status) => status === CheckStatusEnum.Confirmed ? CheckStatusEnum.Confirmed
+          : CheckStatusEnum.Waiting
+      })
     })
 
     return {

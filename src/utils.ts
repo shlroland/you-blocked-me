@@ -1,3 +1,6 @@
+import * as Effect from "effect/Effect";
+import * as Duration from "effect/Duration";
+
 export function wgs84ToGcj02(lat: number, lng: number) {
   const a = 6378245.0;
   const ee = 0.00669342162296594323;
@@ -70,9 +73,4 @@ export function generateMapUrls(lat: number, lng: number) {
       android: `geo:${lat},${lng}?q=${lat},${lng}`, // Android fallback to geo for apple link click
     },
   }
-}
-
-
-export function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
 }

@@ -24,6 +24,7 @@ class RpcLogger extends RpcMiddleware.Tag<RpcLogger>()("RpcLogger", {
   optional: true,
 }) { }
 
+
 const RpcLoggerLive = Layer.succeed(
   RpcLogger,
   RpcLogger.of((opts) =>

@@ -71,10 +71,6 @@ export default function MapContainer({
     }
   }, [markerLocation])
 
-  // if (!mapUrl) {
-  //   return null
-  // }
-
   return (
     <div id="map-container" className="rounded-xl overflow-hidden short:h-36 h-48  shrink-0 relative transition-all duration-300">
       <div id="map-frame" className="w-full h-full border-0" title="Location Map" />
