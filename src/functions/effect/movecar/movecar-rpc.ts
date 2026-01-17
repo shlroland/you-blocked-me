@@ -1,59 +1,32 @@
-import * as HttpApi from "@effect/platform/HttpApi";
-import * as HttpApiEndpoint from "@effect/platform/HttpApiEndpoint";
-import * as HttpApiGroup from "@effect/platform/HttpApiGroup";
-import * as S from "effect/Schema";
+import * as Rpc from "@effect/rpc/Rpc";
+import * as RpcGroup from "@effect/rpc/RpcGroup";
+import * as S from 'effect/Schema'
 import {
-  CheckStatus,
-  NotificationNotFound,
-  NotifyId,
-  NotifyMessageInput,
-  AlertableError,
-  Server3SendKeyNotFound,
-  NotifyStorageData
+  CheckStatus, NotificationNotFound, NotifyId,
+  NotifyMessageInput, AlertableError, Server3SendKeyNotFound, NotifyStorageData
 } from "./movecar-schema";
 import { KVNamespaceError } from "../kv/internal";
 
-export class MovecarApi extends HttpApi.make("MovecarApi")
-  .add(
-    HttpApiGroup.make("movecar")
-      .add(
-        HttpApiEndpoint.post("notify", "/notify")
-          .setPayload(NotifyMessageInput)
-          .addSuccess(NotifyId)
-          .addError(KVNamespaceError)
-          .addError(Server3SendKeyNotFound)
-          .addError(AlertableError)
-      )
-      .add(
-        HttpApiEndpoint.get("getNotification", "/notification/:id")
-          .setPath(
-            S.Struct({
-              id: NotifyId
-            })
-          )
-          .addSuccess(NotifyStorageData)
-          .addError(NotificationNotFound)
-          .addError(KVNamespaceError)
-      )
-      .add(
-        HttpApiEndpoint.post("confirm", "/notification/:id/confirm")
-          .setPath(
-            S.Struct({
-              id: NotifyId
-            })
-          )
-          .addSuccess(S.Void)
-          .addError(KVNamespaceError)
-      )
-      .add(
-        HttpApiEndpoint.get("checkStatus", "/notification/:id/status")
-          .setPath(
-            S.Struct({
-              id: NotifyId
-            })
-          )
-          .addSuccess(CheckStatus)
-          .addError(KVNamespaceError)
-      )
-  )
-{ }
+
+export class MovecarRpc extends RpcGroup.make(
+  Rpc.make('notify', {
+    payload: { input: NotifyMessageInput },
+    success: NotifyId,
+    error: S.Union(KVNamespaceError, Server3SendKeyNotFound, AlertableError)
+  }),
+  Rpc.make('getNotification', {
+    payload: { id: NotifyId },
+    success: NotifyStorageData,
+    error: S.Union(NotificationNotFound, KVNamespaceError)
+  }),
+  Rpc.make('confirm', {
+    payload: { id: NotifyId },
+    success: S.Void,
+    error: KVNamespaceError
+  }),
+  Rpc.make('checkStatus', {
+    payload: { id: NotifyId },
+    success: CheckStatus,
+    error: KVNamespaceError
+  })
+) { }

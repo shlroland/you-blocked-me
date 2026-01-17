@@ -8,8 +8,9 @@ import * as Option from "effect/Option";
 const rpcClientRuntime = Atom.runtime(ApiClient.Default)
 
 export const notifyActionAtom = rpcClientRuntime.fn(Effect.fn(function* (input: NotifyMessageInput) {
-  const { client } = yield* ApiClient;
-  return yield* client.movecar.notify({ payload: input })
+  const { rpcClient } = yield* ApiClient;
+  const id = yield* rpcClient.notify({ input })
+  return id
 }, withAlert({
-  whenSuccess: () => "🎉 发送成功",
+  whenSuccess: () => "发送成功 ",
 })))
