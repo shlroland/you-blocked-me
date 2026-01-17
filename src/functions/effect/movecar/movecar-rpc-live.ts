@@ -1,17 +1,17 @@
-import { MovecarRpc } from "./movecar-rpc";
+import { MovecarApi } from "./movecar-rpc";
 import { Effect } from "effect";
 import { MovecarService } from "./movecar-service";
 import * as Layer from "effect/Layer";
+import * as HttpApiBuilder from "@effect/platform/HttpApiBuilder";
 
-export const MovecarRpcLive = MovecarRpc.toLayer(
+export const MovecarApiLive = HttpApiBuilder.group(MovecarApi, "movecar", (handlers) =>
   Effect.gen(function* () {
     const movecarService = yield* MovecarService
 
-    return {
-      notify: ({ input }) => movecarService.notify(input),
-      getNotification: ({ id }) => movecarService.getNotification(id),
-      confirm: ({ id }) => movecarService.confirm(id),
-      checkStatus: ({ id }) => movecarService.checkStatus(id),
-    }
+    return handlers
+      .handle("notify", (input) => movecarService.notify(input.payload))
+      .handle("getNotification", (input) => movecarService.getNotification(input.path.id))
+      .handle("confirm", (input) => movecarService.confirm(input.path.id))
+      .handle("checkStatus", (input) => movecarService.checkStatus(input.path.id))
   })
 ).pipe(Layer.provide(MovecarService.Default));

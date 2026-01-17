@@ -16,6 +16,7 @@
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
     "@astrojs/react": "^4.4.2",
+    "@effect-atom/atom-react": "^0.4.5",
     "@effect/platform": "^0.94.1",
     "@effect/rpc": "^0.73.0",
     "@hono/standard-validator": "^0.2.1",
@@ -37,6 +38,7 @@
     "esa-cli": "1.0.4-beta.4",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
+    "vite": "^6.0.0",
     "wrangler": "^4.58.0"
   }
 }

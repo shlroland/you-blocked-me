@@ -1,63 +1,59 @@
-import { useActionState, useEffect, useState } from 'react'
+import { useActionState, useState } from 'react'
 import MapContainer from './MapContainer'
+import * as Exit from 'effect/Exit'
 
 type State = {
   error?: string
-  success?: boolean
+  success: boolean
   requestId?: string
 }
 
 // Mock server action
-import { client } from '../client'
+import { useAtomSet } from '@effect-atom/atom-react'
+import { notifyActionAtom } from '../atoms'
 
 // Server action
-async function sendMessage(prevState: State | null, formData: FormData): Promise<State> {
-  const message = formData.get('message') as string
-  const latStr = formData.get('lat') as string
-  const lngStr = formData.get('lng') as string
-
-  const location = latStr && lngStr ? { lat: parseFloat(latStr), lng: parseFloat(lngStr) } : undefined
-
-  try {
-    // Using Hono client to send request
-    const res = await client.api.notify.$post({
-      json: {
-        message: message || undefined,
-        location,
-      },
-    })
-
-    const data = await res.json()
-
-    if (!res.ok) {
-      return { error: 'error' in data ? (data.error as string) : '发送失败' }
-    }
-
-    return {
-      success: true,
-      // @ts-ignore
-      requestId: data.requestId,
-    }
-  } catch (err: any) {
-    return { error: err.message || '网络错误' }
-  }
-}
 
 export default function NotifyForm() {
-  const [state, formAction, isPending] = useActionState(sendMessage, null)
+  const notifyAction = useAtomSet(notifyActionAtom, { mode: 'promiseExit' })
   const [msgText, setMsgText] = useState('')
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null)
-  const [status, setStatus] = useState<'waiting' | 'confirmed' | 'unknown'>('unknown')
 
   const handleQuickMsg = (text: string) => {
-    setMsgText((prev) => (prev ? `${prev} ${text}` : text))
+    setMsgText(text)
   }
 
-  useEffect(() => {
-    if (state?.success && state?.requestId) {
-      window.location.href = `/status?id=${state.requestId}`
-    }
-  }, [state?.success, state?.requestId])
+  const sendMessage = async (_prevState: State | null, formData: FormData): Promise<State> => {
+    const message = formData.get('message') as string
+    const latStr = formData.get('lat') as string
+    const lngStr = formData.get('lng') as string
+
+    const location = latStr && lngStr ? { lat: parseFloat(latStr), lng: parseFloat(lngStr) } : null
+
+    const result = await notifyAction({
+      message,
+      location,
+    })
+
+    const state: State = Exit.isSuccess(result)
+      ? {
+          success: true,
+          requestId: result.value,
+        }
+      : {
+          success: false,
+          error: result.pipe(Exit.getOrElse(() => 'Unknown error')),
+        }
+
+    setTimeout(() => {
+      if (state?.success && state?.requestId) {
+        window.location.href = `/status?id=${state.requestId}`
+      }
+    }, 1000)
+    return state
+  }
+
+  const [state, formAction, isPending] = useActionState(sendMessage, null)
 
   return (
     <form action={formAction} className="contents">

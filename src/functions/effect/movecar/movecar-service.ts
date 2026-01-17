@@ -22,7 +22,7 @@ export class MovecarService extends Effect.Service<MovecarService>()(
 
     const notify = Effect.fn(function* (input: NotifyMessageInput) {
       const { message, location } = input
-      const { url } = yield* HttpServerRequest.HttpServerRequest;
+      const { originalUrl } = yield* HttpServerRequest.HttpServerRequest;
 
       const notifyId = NotifyId.make(crypto.randomUUID())
       let notifyBody = '🚗 挪车请求';
@@ -51,7 +51,7 @@ export class MovecarService extends Effect.Service<MovecarService>()(
 
       const server3Url = `https://14776.push.ft07.com/send/${sendKey}.send`
 
-      const urlIns = new URL(url)
+      const urlIns = new URL(originalUrl)
       const rawConfirmUrl = `${urlIns.origin}/receive?id=${notifyId}`;
 
       const req = yield* HttpClientRequest.post(server3Url).pipe(
@@ -80,6 +80,8 @@ export class MovecarService extends Effect.Service<MovecarService>()(
       )
       const ownerConfirmId = createOwnerConfirmId(notifyId)
       yield* kv.put(ownerConfirmId, CheckStatusEnum.Waiting)
+
+      return notifyId
     })
 
     const getNotification = Effect.fn(function* (id: NotifyId) {
