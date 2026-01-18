@@ -1,7 +1,7 @@
 import { MovecarRpc } from "./movecar-rpc";
-import { Effect } from "effect";
+import * as Effect from 'effect/Effect';
+import * as Layer from 'effect/Layer';
 import { MovecarService } from "./movecar-service";
-import * as Layer from "effect/Layer";
 
 export const MovecarRpcLive = MovecarRpc.toLayer(
   Effect.gen(function* () {

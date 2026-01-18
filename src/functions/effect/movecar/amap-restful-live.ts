@@ -1,9 +1,11 @@
-import { HttpApiBuilder, HttpServerRequest, HttpServerResponse } from "@effect/platform";
+import * as HttpApiBuilder from "@effect/platform/HttpApiBuilder";
+import * as HttpServerRequest from "@effect/platform/HttpServerRequest";
 import { AmapProxyError, AmapServiceApi } from "./amap-restful";
-import { Effect, Option } from "effect";
+import * as Effect from 'effect/Effect';
+import * as Option from 'effect/Option';
+import * as Predicate from 'effect/Predicate';
 import { env } from "../../env";
 import { Cache } from '../cache/internal'
-import { isError } from "effect/Predicate";
 
 export const AmapServiceApiLive = HttpApiBuilder.group(
   AmapServiceApi,
@@ -33,7 +35,7 @@ export const AmapServiceApiLive = HttpApiBuilder.group(
         const res = yield* Effect.tryPromise({
           try: () => fetch(targetUrl.toString()),
           catch: (e) => {
-            throw new AmapProxyError({ message: isError(e) ? e.message : "Unknown error", cause: e })
+            throw new AmapProxyError({ message: Predicate.isError(e) ? e.message : "Unknown error", cause: e })
           }
         })
         response = new Response(res.body, res)

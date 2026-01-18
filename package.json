@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260115.0",
+    "@effect/language-service": "^0.69.1",
     "@types/node": "^25.0.8",
     "dotenv": "^17.2.3",
     "esa-cli": "1.0.4-beta.4",

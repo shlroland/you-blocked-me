@@ -1,9 +1,9 @@
-import { HttpApiClient } from "@effect/platform";
-import { env } from "./env";
-import { Effect, Layer } from "effect";
-import { FetchHttpClient } from "@effect/platform";
+import * as Effect from "effect/Effect";
+import * as Layer from "effect/Layer";
+import * as FetchHttpClient from "@effect/platform/FetchHttpClient";
 import { MovecarRpc } from "./effect/movecar/movecar-rpc";
-import { RpcClient, RpcSerialization } from "@effect/rpc";
+import * as RpcClient from "@effect/rpc/RpcClient";
+import * as RpcSerialization from "@effect/rpc/RpcSerialization";
 
 // const getBaseUrl = (): string =>
 //   import.meta.env.PROD

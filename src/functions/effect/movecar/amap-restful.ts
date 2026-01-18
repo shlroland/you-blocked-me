@@ -1,5 +1,7 @@
-import { HttpApi, HttpApiEndpoint, HttpApiGroup } from "@effect/platform";
-import { Schema } from "effect";
+import * as HttpApi from "@effect/platform/HttpApi";
+import * as HttpApiEndpoint from "@effect/platform/HttpApiEndpoint";
+import * as HttpApiGroup from "@effect/platform/HttpApiGroup";
+import * as Schema from "effect/Schema";
 import { CacheError } from "../cache/internal";
 import * as HttpApiSchema from "@effect/platform/HttpApiSchema";
 

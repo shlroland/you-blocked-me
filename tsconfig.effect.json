@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": false,
+    "noEmit": true,
+    /* Linting */
+    "skipLibCheck": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "plugins": [
+      {
+        "name": "@effect/language-service",
+        "quickinfoEffectParameters": "always",
+        "namespaceImportPackages": [
+          "effect",
+          "@effect/*"
+        ],
+        "topLevelNamedReexports": "follow",
+        "diagnosticSeverity": {
+          "importFromBarrel": "error"
+        },
+        "importAliases": {
+          "Array": "Arr",
+          "Function": "Func",
+          "Boolean": "Bool",
+          "Number": "Num",
+          "String": "Str"
+        }
+      }
+    ],
+    "types": [
+      "@cloudflare/workers-types"
+    ]
+  }
+}

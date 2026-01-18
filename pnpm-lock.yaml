@@ -60,6 +60,9 @@ importers:
       '@cloudflare/workers-types':
         specifier: ^4.20260115.0
         version: 4.20260115.0
+      '@effect/language-service':
+        specifier: ^0.69.1
+        version: 0.69.1
       '@types/node':
         specifier: ^25.0.8
         version: 25.0.8
@@ -394,6 +397,10 @@ packages:
         optional: true
       lmdb:
         optional: true
+
+  '@effect/language-service@0.69.1':
+    resolution: {integrity: sha512-i/o3I/+vJYhL6Vm8LTkdgps+BkbgFXKUT/ESq4SySGfxbfLf5+w3Oqh0EnTC7BNJ/0Hevk0H+qJeuGd+fAR7jQ==}
+    hasBin: true
 
   '@effect/platform@0.94.1':
     resolution: {integrity: sha512-SlL8OMTogHmMNnFLnPAHHo3ua1yrB1LNQOVQMiZsqYu9g3216xjr0gn5WoDgCxUyOdZcseegMjWJ7dhm/2vnfg==}
@@ -4644,6 +4651,8 @@ snapshots:
       '@effect/platform': 0.94.1(effect@3.19.14)
       effect: 3.19.14
       uuid: 11.1.0
+
+  '@effect/language-service@0.69.1': {}
 
   '@effect/platform@0.94.1(effect@3.19.14)':
     dependencies:

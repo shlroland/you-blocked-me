@@ -1,4 +1,8 @@
-import { Predicate, Schema, Effect, type Option, Context, type Data } from "effect";
+import * as Predicate from 'effect/Predicate';
+import * as Schema from 'effect/Schema';
+import * as Effect from 'effect/Effect';
+import * as Option from 'effect/Option';
+import * as Context from 'effect/Context';
 
 /**
  * @since 1.0.0

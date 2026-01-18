@@ -9,9 +9,10 @@ import {
   AlertableError,
   NotifyStorageData
 } from "./movecar-schema";
-import { KVStore, KVNamespaceError } from "../kv/internal";
+import { KVStore } from "../kv/internal";
 import { env } from "../../env";
-import { HttpClient, HttpClientRequest } from "@effect/platform";
+import * as HttpClient from "@effect/platform/HttpClient";
+import * as HttpClientRequest from "@effect/platform/HttpClientRequest";
 import * as Option from "effect/Option";
 import * as HttpServerRequest from "@effect/platform/HttpServerRequest";
 
@@ -46,7 +47,7 @@ export class MovecarService extends Effect.Service<MovecarService>()(
       const sendKey = env.SERVER3_SEND_KEY
 
       if (!sendKey) {
-        yield* Effect.fail(new Server3SendKeyNotFound({ id: notifyId }))
+        return yield* new Server3SendKeyNotFound({ id: notifyId })
       }
 
       const server3Url = `https://14776.push.ft07.com/send/${sendKey}.send`

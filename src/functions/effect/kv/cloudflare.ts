@@ -1,5 +1,7 @@
 import { type KVNamespace as CFKVNamespace } from '@cloudflare/workers-types'
-import { Effect, Layer, Option } from 'effect';
+import * as Effect from 'effect/Effect';
+import * as Layer from 'effect/Layer';
+import * as Option from 'effect/Option';
 import { mapError, type GetWithMetadataResult, type KVNamespace, type ListKey } from './internal';
 import { dual } from 'effect/Function';
 import { KVStore } from './internal';

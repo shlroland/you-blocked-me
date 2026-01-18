@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "astro/tsconfigs/strict",
+    "./tsconfig.effect.json"
+  ],
+  "include": [
+    "src/**/*",
+    "env.d.ts",
+    ".astro/types.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "dist-worker"
+  ]
+}

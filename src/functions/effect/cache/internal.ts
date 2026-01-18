@@ -1,4 +1,5 @@
-import { Context, Schema } from 'effect';
+import * as Context from 'effect/Context';
+import * as Schema from 'effect/Schema';
 import * as Effect from 'effect/Effect';
 import * as Option from 'effect/Option'
 

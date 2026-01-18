@@ -1,7 +1,9 @@
-import { Effect, Option, Layer } from "effect";
+import * as Effect from 'effect/Effect';
+import * as Option from 'effect/Option';
+import * as Layer from 'effect/Layer';
+import * as Func from 'effect/Function';
 import { KVStore, KVNotSupportedError } from "./internal";
 import { mapError, type KVNamespace } from './internal';
-import { dual } from 'effect/Function';
 
 
 export const make = <Key extends string = string>(
@@ -66,7 +68,7 @@ export const withKVNamespace: {
     effect: Effect.Effect<A, E, R>,
     kv: EdgeKV,
   ): Effect.Effect<A, E, R>;
-} = dual(
+} = Func.dual(
   2,
   <A, E, R>(
     effect: Effect.Effect<A, E, R>,
