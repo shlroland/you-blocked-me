@@ -6,7 +6,6 @@ import { isError } from "effect/Predicate";
 import * as Layer from "effect/Layer";
 
 export const make = (): CacheStruct => {
-  const cache = globalThis.cache
   return {
     match: (key: string, _options?: CacheQueryOptions) => {
       return Effect.tryPromise({

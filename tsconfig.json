@@ -3,6 +3,9 @@
   "references": [
     {
       "path": "./tsconfig.astro.json"
+    },
+    {
+      "path": "./tsconfig.esa.worker.json"
     }
   ]
 }

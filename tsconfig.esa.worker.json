@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.effect.json",
+  "include": [
+    "src/functions/effect/adapator/esa/**/*",
+    "src/types/esa.d.ts"
+  ]
+}

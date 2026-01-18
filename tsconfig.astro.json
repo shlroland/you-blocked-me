@@ -10,6 +10,8 @@
   ],
   "exclude": [
     "dist",
-    "dist-worker"
+    "dist-worker",
+    "src/types/esa.d.ts",
+    "src/functions/effect/adapator"
   ]
 }
