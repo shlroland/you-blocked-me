@@ -2,7 +2,7 @@ import * as HttpApi from "@effect/platform/HttpApi";
 import * as HttpApiEndpoint from "@effect/platform/HttpApiEndpoint";
 import * as HttpApiGroup from "@effect/platform/HttpApiGroup";
 import * as Schema from "effect/Schema";
-import { CacheError } from "../cache/internal";
+import { CacheError } from "../cache";
 import * as HttpApiSchema from "@effect/platform/HttpApiSchema";
 
 export class AmapProxyError extends Schema.TaggedError<AmapProxyError>()("AmapProxyError", {

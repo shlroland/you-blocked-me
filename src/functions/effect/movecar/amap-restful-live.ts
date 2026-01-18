@@ -5,7 +5,7 @@ import * as Effect from 'effect/Effect';
 import * as Option from 'effect/Option';
 import * as Predicate from 'effect/Predicate';
 import { env } from "../../env";
-import { Cache } from '../cache/internal'
+import { Cache } from '../cache'
 
 export const AmapServiceApiLive = HttpApiBuilder.group(
   AmapServiceApi,

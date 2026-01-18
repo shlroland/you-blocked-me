@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
-  entry: ['src/functions/index.ts'],
+  entry: ['src/functions/effect/adapator/esa/index.ts'],
   format: ['esm'],
   outDir: 'dist-worker',
   clean: true,

@@ -5,7 +5,7 @@ import {
   CheckStatus, NotificationNotFound, NotifyId,
   NotifyMessageInput, AlertableError, Server3SendKeyNotFound, NotifyStorageData
 } from "./movecar-schema";
-import { KVNamespaceError } from "../kv/internal";
+import { KVNamespaceError } from "../kv";
 
 
 export class MovecarRpc extends RpcGroup.make(

@@ -9,7 +9,7 @@ import {
   AlertableError,
   NotifyStorageData
 } from "./movecar-schema";
-import { KVStore } from "../kv/internal";
+import { KVStore } from "../kv";
 import { env } from "../../env";
 import * as HttpClient from "@effect/platform/HttpClient";
 import * as HttpClientRequest from "@effect/platform/HttpClientRequest";

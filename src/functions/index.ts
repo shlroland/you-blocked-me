@@ -1,6 +1,4 @@
 import { handleNotify, handleGetLocation, handleOwnerConfirmAction, handleCheckStatus } from './api/handlers';
-import { handler } from "./effect/esa-handler"
-
 async function handleRequest(request: Request) {
   const url = new URL(request.url);
   const path = url.pathname;
@@ -29,12 +27,4 @@ async function handleRequest(request: Request) {
 }
 
 
-
-// export { handler as default } from './api/hono';
-
-export default {
-  fetch(req: Request, ctx: any) {
-    // console.alert("fetch", req.url);
-    return handler(req, ctx);
-  }
-}
+export { default } from './effect/adapator/esa';

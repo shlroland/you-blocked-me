@@ -1,18 +1,18 @@
-import type { CacheStruct, CacheQueryOptions } from "./internal";
-import { CacheStorage } from '@cloudflare/workers-types'
+import type { CacheStruct, CacheQueryOptions } from "../../cache";
+import { Cache as CFCache, CacheStorage } from '@cloudflare/workers-types'
 import * as Effect from 'effect/Effect';
 import * as Option from 'effect/Option';
-import { CacheUnknownError, Cache413Error, Cache } from './internal';
+import { dual } from "effect/Function";
+import { CacheUnknownError, Cache413Error, Cache } from '../../cache';
 import { isError } from "effect/Predicate";
 import * as Layer from "effect/Layer";
 
-export const make = (): CacheStruct => {
-  const cache = globalThis.cache
+export const make = (cache: CFCache): CacheStruct => {
   return {
     match: (key: string, options?: CacheQueryOptions) => {
       return Effect.tryPromise({
         try: async () => {
-          const response = (await cache.get(key)) as Response | undefined
+          const response = (await cache.match(key, options)) as Response | undefined
           const result = Option.fromNullable(response);
           return result;
         },
@@ -68,12 +68,34 @@ export const make = (): CacheStruct => {
  * @since 1.0.0
  * @category layers
  */
-export const layer = Layer.succeed(Cache, make())
+export const layer = (cacheName?: string): Layer.Layer<CacheStruct> => Layer.effect(Cache,
+  Effect.gen(function* () {
+    const _caches = caches as unknown as CacheStorage;
+    const cache = yield*
+      Effect.tryPromise({
+        try: () => cacheName ? _caches.open(cacheName) : Promise.resolve(_caches.default),
+        catch: (error) => new Error(`[Cache] Failed to open cache '${cacheName}': ${String(error)}`),
+      }).pipe(Effect.orDie);
+
+    return make(cache);
+  }))
 
 /**
  * @since 1.0.0
  * @category combinators
  */
-export const withCache = <A, E, R>(
-  effect: Effect.Effect<A, E, R>,
-): Effect.Effect<A, E, R> => Effect.provideService(effect, Cache, make())
+export const withCache: {
+  (
+    cache: CFCache,
+  ): <A, E, R>(effect: Effect.Effect<A, E, R>) => Effect.Effect<A, E, R>;
+  <A, E, R>(
+    effect: Effect.Effect<A, E, R>,
+    cache: CFCache,
+  ): Effect.Effect<A, E, R>;
+} = dual(
+  2,
+  <A, E, R>(
+    effect: Effect.Effect<A, E, R>,
+    cache: CFCache,
+  ): Effect.Effect<A, E, R> => Effect.provideService(effect, Cache, make(cache)),
+);

@@ -2,8 +2,7 @@ import * as Effect from 'effect/Effect';
 import * as Option from 'effect/Option';
 import * as Layer from 'effect/Layer';
 import * as Func from 'effect/Function';
-import { KVStore, KVNotSupportedError } from "./internal";
-import { mapError, type KVNamespace } from './internal';
+import { KVStore, KVNotSupportedError, mapError, type KVNamespace } from "../../kv";
 
 
 export const make = <Key extends string = string>(
