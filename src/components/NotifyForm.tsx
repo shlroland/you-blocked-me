@@ -47,7 +47,7 @@ export default function NotifyForm() {
 
     setTimeout(() => {
       if (state?.success && state?.requestId) {
-        // window.location.href = `/status?notifyId=${state.requestId}`
+        window.location.href = `/status?notifyId=${state.requestId}`
       }
     }, 1000)
     return state

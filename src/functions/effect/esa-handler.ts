@@ -1,6 +1,8 @@
 import * as HttpLayerRouter from "@effect/platform/HttpLayerRouter";
 import * as Layer from "effect/Layer";
 import * as Effect from "effect/Effect";
+
+import * as Scope from "effect/Scope";
 // import { MovecarApiLive } from "./movecar/movecar-rpc-live";
 // import { MovecarApi } from "./movecar/movecar-rpc";
 import * as RpcMiddleware from '@effect/rpc/RpcMiddleware'
@@ -87,9 +89,11 @@ const AllRoutes = Layer.mergeAll(RpcRouter, HttpApiRouter, HealthCheckRouter).pi
   Layer.provide(HttpLayerRouter.cors()),
 )
 
-const memoMap = Effect.runSync(Layer.makeMemoMap);
+import { makeWebRuntime } from "./runtime";
 
-const { handler, dispose } = HttpLayerRouter.toWebHandler(AllRoutes, { memoMap });
+const webRuntime = makeWebRuntime(
+  Layer.provideMerge(AllRoutes, HttpLayerRouter.layer)
+)
 
 const globalHmr = globalThis as unknown as {
   __EFFECT_DISPOSE__?: () => Promise<void>;
@@ -100,9 +104,13 @@ if (globalHmr.__EFFECT_DISPOSE__) {
 }
 
 globalHmr.__EFFECT_DISPOSE__ = async () => {
-  await dispose();
+  await webRuntime.dispose();
 };
 
-export {
-  handler
+export const handler = async (request: Request) => {
+  const runtime = await webRuntime.getRuntime()
+  const app = Effect.flatMap(HttpLayerRouter.HttpRouter, (router) => router.asHttpEffect()).pipe(
+    Effect.provideService(Scope.Scope, webRuntime.scope)
+  )
+  return webRuntime.runResponse(runtime, app, request)
 }
