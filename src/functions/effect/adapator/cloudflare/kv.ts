@@ -1,4 +1,3 @@
-import { type KVNamespace as CFKVNamespace } from '@cloudflare/workers-types'
 import * as Effect from 'effect/Effect';
 import * as Layer from 'effect/Layer';
 import * as Option from 'effect/Option';
@@ -7,11 +6,17 @@ import { dual } from 'effect/Function';
 import { KVStore } from '../../kv';
 
 /**
+ * Cloudflare Workers 运行时的 KVNamespace 类型
+ * 这是全局类型，与我们自定义的 Effect-based KVNamespace 不同
+ */
+type CloudflareKVNamespace<Key extends string = string> = globalThis.KVNamespace<Key>;
+
+/**
  * @since 1.0.0
  * @category constructors
  */
 export const make = <Key extends string = string>(
-  kv: CFKVNamespace<Key>,
+  kv: CloudflareKVNamespace<Key>,
 ): KVNamespace<Key> => {
   return {
     get: ((...args: unknown[]) => {
@@ -200,7 +205,7 @@ export const make = <Key extends string = string>(
  * @since 1.0.0
  * @category layers
  */
-export const layer = (kv: CFKVNamespace): Layer.Layer<KVNamespace> =>
+export const layer = (kv: CloudflareKVNamespace): Layer.Layer<KVNamespace> =>
   Layer.succeed(KVStore, make(kv));
 
 /**
@@ -209,16 +214,16 @@ export const layer = (kv: CFKVNamespace): Layer.Layer<KVNamespace> =>
  */
 export const withKVNamespace: {
   (
-    kv: CFKVNamespace,
+    kv: CloudflareKVNamespace,
   ): <A, E, R>(effect: Effect.Effect<A, E, R>) => Effect.Effect<A, E, R>;
   <A, E, R>(
     effect: Effect.Effect<A, E, R>,
-    kv: CFKVNamespace,
+    kv: CloudflareKVNamespace,
   ): Effect.Effect<A, E, R>;
 } = dual(
   2,
   <A, E, R>(
     effect: Effect.Effect<A, E, R>,
-    kv: CFKVNamespace,
+    kv: CloudflareKVNamespace,
   ): Effect.Effect<A, E, R> => Effect.provideService(effect, KVStore, make(kv)),
 );

@@ -8,10 +8,13 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "worker:dev": "pnpm run --parallel \"/^worker:dev:.*/\"",
     "worker:dev:tsup": "tsup --watch",
     "worker:dev:wrangler": "wrangler dev",
-    "build:worker": "tsup"
+    "worker:dev:esa": "sudo pnpm esa dev",
+    "build:worker": "tsup",
+    "build:esa": "pnpm build && pnpm build:worker",
+    "build:cf": "pnpm build",
+    "types:wrangler": "wrangler types && mv worker-configuration.d.ts src/types/worker-configuration.d.ts"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",

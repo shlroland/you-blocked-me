@@ -1,5 +1,5 @@
 import type { CacheStruct, CacheQueryOptions } from "../../cache";
-import { Cache as CFCache, CacheStorage } from '@cloudflare/workers-types'
+import { CacheStorage, Cache as CFCache } from '@cloudflare/workers-types'
 import * as Effect from 'effect/Effect';
 import * as Option from 'effect/Option';
 import { dual } from "effect/Function";
@@ -70,11 +70,16 @@ export const make = (cache: CFCache): CacheStruct => {
  */
 export const layer = (cacheName?: string): Layer.Layer<CacheStruct> => Layer.effect(Cache,
   Effect.gen(function* () {
-    const _caches = caches as unknown as CacheStorage;
     const cache = yield*
       Effect.tryPromise({
-        try: () => cacheName ? _caches.open(cacheName) : Promise.resolve(_caches.default),
-        catch: (error) => new Error(`[Cache] Failed to open cache '${cacheName}': ${String(error)}`),
+        try: () => cacheName
+          ? caches.open(cacheName).then(c => c as unknown as CFCache)
+          : Promise.resolve((caches as unknown as CacheStorage).default),
+        catch: (error) => new CacheUnknownError({
+          operation: "open",
+          cause: error,
+          reason: "Unknown error",
+        }),
       }).pipe(Effect.orDie);
 
     return make(cache);

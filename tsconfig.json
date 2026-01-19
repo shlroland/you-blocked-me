@@ -6,6 +6,9 @@
     },
     {
       "path": "./tsconfig.esa.worker.json"
+    },
+    {
+      "path": "./tsconfig.cf.worker.json"
     }
   ]
 }

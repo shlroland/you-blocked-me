@@ -16,7 +16,7 @@ import * as HttpMiddleware from "@effect/platform/HttpMiddleware"
  * 2. Caching of the Runtime for subsequent requests (Global Scope).
  * 3. Exposing the Runtime to allow request-level context injection (e.g. Env).
  */
-export const makeWebRuntime = <A, E, R extends Scope.Scope | never = never>(
+export const makeWebRuntime = <A, E, R = never>(
   layer: Layer.Layer<A, E, R>,
   options?: {
     readonly memoMap?: Layer.MemoMap | undefined

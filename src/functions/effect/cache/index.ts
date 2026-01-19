@@ -34,7 +34,7 @@ export class Cache413Error extends Schema.TaggedError<Cache413Error>(
   }
 }
 
-const CacheOperations = Schema.Literal("match", "put", "delete");
+const CacheOperations = Schema.Literal("match", "put", "delete", "open");
 
 export class CacheUnknownError extends Schema.TaggedError<CacheUnknownError>(
   "@you-blocked-me/CacheUnknownError",
