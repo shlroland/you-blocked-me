@@ -5,11 +5,21 @@
       "type": "node",
       "request": "attach",
       "port": 9229,
-      "cwd": "/",
-      "resolveSourceMapLocations": null,
+      "cwd": "${workspaceFolder}",
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ],
       "attachExistingChildren": false,
       "autoAttachChildProcesses": false,
-      "sourceMaps": true // works with or without this line
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceFolder}/.wrangler/**/*.js",
+        "${workspaceFolder}/dist-worker/**/*.js"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     }
   ]
 }

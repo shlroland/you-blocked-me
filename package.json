@@ -10,6 +10,7 @@
     "astro": "astro",
     "worker:dev:tsup": "tsup --watch",
     "worker:dev:wrangler": "wrangler dev",
+    "worker:dev:debug": "wrangler dev --inspector-port=9229",
     "worker:dev:esa": "sudo pnpm esa dev",
     "build:worker": "tsup",
     "build:esa": "pnpm build && pnpm build:worker",

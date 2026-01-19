@@ -1,53 +1,60 @@
-import { makeWebRuntime } from "../../runtime";
 import { registerHmr } from "../../hmr-register";
 import { AllRoutes } from '../../router'
 import * as Effect from "effect/Effect"
-import * as Runtime from "effect/Runtime"
-import * as Layer from "effect/Layer"
-import * as Scope from "effect/Scope"
-import * as ConfigProvider from "effect/ConfigProvider"
 import * as HttpLayerRouter from "@effect/platform/HttpLayerRouter"
-import { make as makeKV } from "./kv";
-import { make as makeCache } from "./cache";
-import { KVStore } from "../../kv";
-import { Cache } from "../../cache";
+import * as KV from "./kv";
+import * as Cache from "./cache";
+import * as Layer from "effect/Layer";
+import * as HttpApp from "@effect/platform/HttpApp"
+import { Cache as _Cache } from "../../cache"
+import * as Context from "effect/Context"
+import * as HttpMiddleware from "@effect/platform/HttpMiddleware"
+import { compose } from "effect/Function";
+import { withEnvMiddleware } from "./env";
+
+export const makeRuntimeFactory = (
+  memoMap?: Layer.MemoMap | undefined,
+): {
+  makeRuntime: (env: Cloudflare.Env) => (request: Request, context?: Context.Context<never> | undefined) => Promise<Response>
+  dispose: (() => Promise<void>) | undefined
+} => {
+  let dispose: (() => Promise<void>) | undefined = undefined
+
+  const makeRuntime = (
+    env: Cloudflare.Env,
+    middleware?: HttpMiddleware.HttpMiddleware | undefined,
+  ) => {
+    const layer = AllRoutes.pipe(
+      Layer.provide(KV.layer(env.YOU_BLOCKED_ME)),
+      Layer.provide(Cache.layer((caches as any).default)),
+    )
+
+    const { handler, dispose: _dispose } = HttpApp.toWebHandlerLayerWith(layer, {
+      toHandler: (r) => Effect.succeed(Context.get(r.context, HttpLayerRouter.HttpRouter).asHttpEffect()),
+      middleware: middleware ? compose(middleware, withEnvMiddleware(env)) : withEnvMiddleware(env),
+      memoMap,
+    })
+
+    dispose = _dispose
+
+    return handler
+  }
 
 
-const webRuntime = makeWebRuntime(AllRoutes)
+  return {
+    makeRuntime,
+    dispose,
+  }
+}
+
+const { makeRuntime, dispose } = await makeRuntimeFactory()
 
 registerHmr(async () => {
-  await webRuntime.dispose()
+  await dispose?.()
 })
 
 export const handler = async (request: Request, env: Cloudflare.Env) => {
-  // 为每个请求创建包含 env 绑定的 Layer
-  const envLayer = Layer.mergeAll(
-    Layer.succeed(KVStore, makeKV(env.YOU_BLOCKED_ME)),  // KV Layer
-    Layer.succeed(Cache, makeCache((caches as any).default))  // Cache Layer
-  )
+  const handler = makeRuntime(env)
 
-  // 将 env Layer 提供给 AllRoutes
-  const appLayer = AllRoutes.pipe(
-    Layer.provide(envLayer)
-  )
-
-  // 构建 Runtime
-  const runtime = await Layer.toRuntime(appLayer).pipe(
-    Scope.extend(webRuntime.scope),
-    Effect.runPromise
-  )
-
-  console.log('env.SERVER3_SEND_KEY', env.SERVER3_SEND_KEY)
-
-  const app = HttpLayerRouter.HttpRouter.pipe(
-    Effect.withConfigProvider(ConfigProvider.fromJson({
-      AMAP_SECURITY_KEY: env.AMAP_SECURITY_KEY,
-      ENVIRONMENT: env.ENVIRONMENT,
-      SERVER3_SEND_KEY: env.SERVER3_SEND_KEY
-    })),
-    Effect.flatMap((router) => router.asHttpEffect()),
-    Effect.provideService(Scope.Scope, webRuntime.scope),
-  )
-
-  return webRuntime.runResponse(runtime, app, request)
+  return handler(request)
 }
