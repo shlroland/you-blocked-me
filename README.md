@@ -1,84 +1,106 @@
-# 🚗💢 你挡住我了！ (You Blocked Me!)
+# 🚗💢 You Blocked Me!
 
-一个快速、简单、隐私友好的挪车通知系统。 🚀
+A modern car-moving notification system built with **Effect-ts**, capable of running on **Aliyun ESA** and **Cloudflare** workers simultaneously. 🚀
 
-✨ **预览地址：** [rolshen.xin/notify](https://rolshen.xin/notify)
-
----
-
-## 📖 项目简介
-
-当你发现别人的车挡住了你的去路，或者你不得不临时停靠在可能挡住别人的地方时，这个项目能帮你快速建立联系。
-
-💡 **灵感来源：** 感谢 [lesnolie/movecar](https://github.com/lesnolie/movecar) 提供的优秀创意！❤️
+[中文文档](./README_zh-CN.md) | [Live Preview](https://rolshen.xin/notify)
 
 ---
 
-## 🔥 功能特性
+## 🌟 Key Highlights
 
-- ⚡️ **即时通知：** 通过简单的表单发送挪车请求，车主秒收通知。
-- 📍 **精准定位：** 结合高德地图 API，自动获取并发送当前位置，方便车主找车。
-- 🛡️ **隐私保护：** 无需公开电话号码，通过加密通道进行间接沟通。
-- 📱 **适配移动端：** 专门优化的 UI 体验，单手操作无压力。
-- 🔄 **状态追踪：** 实时轮询处理状态，确认车主是否已收到请求并出发。
+### 1. ⚡️ Powered by Effect-ts
+The core business logic is entirely built using [Effect-ts](https://effect.website/). Leveraging its powerful **Structured Concurrency**, **Dependency Injection**, and **Error Handling** mechanisms, we ensure the business logic is robust and maintainable. We are not just writing code with Effect; we are embracing a new paradigm for building high-reliability software.
+
+### 2. ☁️ Multi-Cloud Serverless Architecture
+This is not just a single-platform application. We designed a flexible Adaptor Pattern that allows the same business code to run on multiple edge computing platforms:
+*   **Aliyun ESA (Edge Security Acceleration)**
+*   **Cloudflare Workers**
+
+The architecture is designed for extensibility, with support for more Serverless runtime environments coming in the future.
+
+### 3. 🔥 Bleeding Edge Tech Stack
+*   **Effect**: Core business logic and side-effect management
+*   **Astro 5.0**: High-performance modern Web framework
+*   **React 19 + Tailwind CSS 4**: Fast, beautiful UI construction
+*   **Hono**: Lightweight Web Standard compatible routing
+*   **Arktype**: High-performance runtime type validation
 
 ---
 
-## 🛠️ 技术栈
+## 📖 Features
 
-这个项目采用了现代化的前端与边缘计算技术：
-
-- **框架：** [Astro 5.0](https://astro.build/) (全能的现代 Web 框架)
-- **UI：** [React 19](https://react.dev/) + [Tailwind CSS 4](https://tailwindcss.com/)
-- **API：** [Hono](https://hono.dev/) (超轻量级 Web 框架)
-- **校验：** [Arktype](https://arktype.io/) (运行时类型校验)
-- **部署：** 边缘计算服务 (Edge Workers & KV)
+- ⚡️ **Instant Notifications:** Send moving requests with a simple form; owners receive notifications in seconds.
+- 📍 **Precise Location:** Integrated with Amap (Gaode) API to automatically capture and send current location, helping owners find their cars easily.
+- 🛡️ **Privacy First:** Communicate indirectly through encrypted channels without revealing phone numbers.
+- 📱 **Mobile Optimized:** A UI experience designed specifically for mobile devices, easy for one-handed operation.
+- 🔄 **Status Tracking:** Real-time polling of processing status to confirm if the owner has received the request and is on their way.
 
 ---
 
-## 🚀 快速开始
+## 🛠️ Quick Start
 
-### 1. 克隆项目
+### 1. Clone the project
 
 ```bash
 git clone https://github.com/shlroland/you-blocked-me.git
 cd you-blocked-me
 ```
 
-### 2. 安装依赖
+### 2. Install dependencies
 
 ```bash
 pnpm install
 ```
 
-### 3. 环境配置
+### 3. Configuration
 
-复制 `.env.example` 并更名为 `.env`，填入必要的信息：
+Copy `.env.example` to `.env` and fill in the necessary information:
 
 ```bash
 AMAP_SECURITY_KEY=xxx
 SERVER3_SEND_KEY=xxx
 ```
 
-### 4. 启动开发服务
+### 4. Development
 
-```bash
-pnpm dev
-```
+We provide development commands for different runtimes:
 
-启动 Worker 服务（用于本地调试 API）：
+*   **Start Frontend Dev Server (Astro):**
+    ```bash
+    pnpm dev
+    ```
 
-```bash
-pnpm worker:dev
-```
+*   **Start Cloudflare Workers Debugging:**
+    ```bash
+    pnpm worker:dev:wrangler
+    ```
+
+*   **Start Aliyun ESA Debugging:**
+    ```bash
+    pnpm worker:dev:esa
+    ```
+
+### 5. Build & Deploy
+
+Choose the build command based on your target platform:
+
+*   **Build for Aliyun ESA:**
+    ```bash
+    pnpm build:esa
+    ```
+
+*   **Build for Cloudflare:**
+    ```bash
+    pnpm build:cf
+    ```
 
 ---
 
-## 🤝 贡献与感谢
+## 🤝 Contribution & Acknowledgements
 
-欢迎提交 Issue 或 Pull Request！
+💡 **Inspiration:** Thanks to [lesnolie/movecar](https://github.com/lesnolie/movecar) for the excellent idea! ❤️
 
-再次感谢 [lesnolie/movecar](https://github.com/lesnolie/movecar) 的启发！🚗💨
+Issues and Pull Requests are welcome, especially if you are interested in adapting Effect-ts for more Serverless platforms!
 
 ---
 
