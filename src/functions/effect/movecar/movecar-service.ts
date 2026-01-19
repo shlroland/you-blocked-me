@@ -10,11 +10,11 @@ import {
   NotifyStorageData
 } from "./movecar-schema";
 import { KVStore } from "../kv";
-import { env } from "../../env";
 import * as HttpClient from "@effect/platform/HttpClient";
 import * as HttpClientRequest from "@effect/platform/HttpClientRequest";
 import * as Option from "effect/Option";
 import * as HttpServerRequest from "@effect/platform/HttpServerRequest";
+import * as Config from "effect/Config";
 
 export class MovecarService extends Effect.Service<MovecarService>()(
   "MovecarService", {
@@ -44,7 +44,10 @@ export class MovecarService extends Effect.Service<MovecarService>()(
 
       yield* kv.put(requestNotifyId, JSON.stringify(storageData))
 
-      const sendKey = env.SERVER3_SEND_KEY
+      // const sendKey = env.SERVER3_SEND_KEY
+      const sendKey = yield* Config.string("SERVER3_SEND_KEY").pipe(
+        Effect.mapError(e => new AlertableError({ cause: e, message: "Config Error: SERVER3_SEND_KEY" }))
+      )
 
       if (!sendKey) {
         return yield* new Server3SendKeyNotFound({ id: notifyId })

@@ -1,4 +1,6 @@
+import { httpApp } from '@effect/platform/HttpApiBuilder';
 import { handleNotify, handleGetLocation, handleOwnerConfirmAction, handleCheckStatus } from './api/handlers';
+import * as HttpApp from "@effect/platform/HttpApp";
 async function handleRequest(request: Request) {
   const url = new URL(request.url);
   const path = url.pathname;
@@ -26,5 +28,6 @@ async function handleRequest(request: Request) {
   return new Response('Not Found', { status: 404 });
 }
 
+HttpApp.toWebHandler
 
 export { default } from './effect/adapator/esa';

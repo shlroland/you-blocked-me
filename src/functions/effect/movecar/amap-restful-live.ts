@@ -4,8 +4,10 @@ import { AmapProxyError, AmapServiceApi } from "./amap-restful";
 import * as Effect from 'effect/Effect';
 import * as Option from 'effect/Option';
 import * as Predicate from 'effect/Predicate';
-import { env } from "../../env";
 import { Cache } from '../cache'
+import * as Config from "effect/Config";
+
+
 
 export const AmapServiceApiLive = HttpApiBuilder.group(
   AmapServiceApi,
@@ -19,7 +21,9 @@ export const AmapServiceApiLive = HttpApiBuilder.group(
       const targetUrl = new URL('https://restapi.amap.com' + path);
 
 
-      const jscode = env.AMAP_SECURITY_KEY || '请配置AMAP_SECURITY_KEY环境变量';
+      const jscode = yield* Config.string("AMAP_SECURITY_KEY").pipe(
+        Effect.mapError(e => new AmapProxyError({ message: "Config Error: AMAP_SECURITY_KEY", cause: e }))
+      )
       targetUrl.searchParams.append('jscode', jscode);
 
       yield* Effect.logInfo(`Requesting AMap API: ${targetUrl.toString()}`)
@@ -34,9 +38,7 @@ export const AmapServiceApiLive = HttpApiBuilder.group(
       if (!response) {
         const res = yield* Effect.tryPromise({
           try: () => fetch(targetUrl.toString()),
-          catch: (e) => {
-            throw new AmapProxyError({ message: Predicate.isError(e) ? e.message : "Unknown error", cause: e })
-          }
+          catch: (e) => new AmapProxyError({ message: Predicate.isError(e) ? e.message : "Unknown error", cause: e })
         })
         response = new Response(res.body, res)
         yield* cache.put(cacheKey, response)
