@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "module": "true",
+  "packageManager": "pnpm@10.28.0",
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",

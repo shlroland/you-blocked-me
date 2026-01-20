@@ -23,9 +23,6 @@ importers:
       '@effect/rpc':
         specifier: ^0.73.0
         version: 0.73.0(@effect/platform@0.94.1(effect@3.19.14))(effect@3.19.14)
-      '@hono/standard-validator':
-        specifier: ^0.2.1
-        version: 0.2.1(@standard-schema/spec@1.0.0)(hono@4.11.3)
       '@tailwindcss/vite':
         specifier: ^4.1.18
         version: 4.1.18(vite@6.4.1(@types/node@25.0.8)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2))
@@ -35,18 +32,12 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.8)
-      arktype:
-        specifier: ^2.1.29
-        version: 2.1.29
       astro:
         specifier: ^5.16.8
         version: 5.16.8(@types/node@25.0.8)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(rollup@4.55.1)(typescript@5.9.3)
       effect:
         specifier: ^3.19.14
         version: 3.19.14
-      hono:
-        specifier: ^4.11.3
-        version: 4.11.3
       react:
         specifier: ^19.2.3
         version: 19.2.3
@@ -180,12 +171,6 @@ packages:
 
   '@amap/amap-jsapi-loader@1.0.1':
     resolution: {integrity: sha512-nPyLKt7Ow/ThHLkSvn2etQlUzqxmTVgK7bIgwdBRTg2HK5668oN7xVxkaiRe3YZEzGzfV2XgH5Jmu2T73ljejw==}
-
-  '@ark/schema@0.56.0':
-    resolution: {integrity: sha512-ECg3hox/6Z/nLajxXqNhgPtNdHWC9zNsDyskwO28WinoFEnWow4IsERNz9AnXRhTZJnYIlAJ4uGn3nlLk65vZA==}
-
-  '@ark/util@0.56.0':
-    resolution: {integrity: sha512-BghfRC8b9pNs3vBoDJhcta0/c1J1rsoS1+HgVUreMFPdhz/CRAKReAu57YEllNaSy98rWAdY1gE+gFup7OXpgA==}
 
   '@astrojs/compiler@2.13.0':
     resolution: {integrity: sha512-mqVORhUJViA28fwHYaWmsXSzLO9osbdZ5ImUfxBarqsYdMlPbqAqGJCxsNzvppp1BEzc1mJNjOVvQqeDN8Vspw==}
@@ -865,12 +850,6 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
-
-  '@hono/standard-validator@0.2.1':
-    resolution: {integrity: sha512-uF1W7/iSWi0r5Mugj5ZzdlCVp/KeGatS6JYt+Eht9xKO0IDtdZbdaLApgjrzHINQQa+Wnxw2pcX6EfO+vgB+Wg==}
-    peerDependencies:
-      '@standard-schema/spec': 1.0.0
-      hono: '>=3.9.0'
 
   '@iarna/toml@2.2.5':
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
@@ -1652,12 +1631,6 @@ packages:
     resolution: {integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==}
     engines: {node: '>= 0.4'}
 
-  arkregex@0.0.5:
-    resolution: {integrity: sha512-ncYjBdLlh5/QnVsAA8De16Tc9EqmYM7y/WU9j+236KcyYNUXogpz3sC4ATIZYzzLxwI+0sEOaQLEmLmRleaEXw==}
-
-  arktype@2.1.29:
-    resolution: {integrity: sha512-jyfKk4xIOzvYNayqnD8ZJQqOwcrTOUbIU4293yrzAjA3O1dWh61j71ArMQ6tS/u4pD7vabSPe7nG3RCyoXW6RQ==}
-
   array-iterate@2.0.1:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
 
@@ -2373,10 +2346,6 @@ packages:
 
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
-
-  hono@4.11.3:
-    resolution: {integrity: sha512-PmQi306+M/ct/m5s66Hrg+adPnkD5jiO6IjA7WhWw0gSBSo1EcRegwuI1deZ+wd5pzCGynCcn2DprnE4/yEV4w==}
-    engines: {node: '>=16.9.0'}
 
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
@@ -4373,12 +4342,6 @@ snapshots:
 
   '@amap/amap-jsapi-loader@1.0.1': {}
 
-  '@ark/schema@0.56.0':
-    dependencies:
-      '@ark/util': 0.56.0
-
-  '@ark/util@0.56.0': {}
-
   '@astrojs/compiler@2.13.0': {}
 
   '@astrojs/internal-helpers@0.7.5': {}
@@ -4896,11 +4859,6 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.0':
     optional: true
-
-  '@hono/standard-validator@0.2.1(@standard-schema/spec@1.0.0)(hono@4.11.3)':
-    dependencies:
-      '@standard-schema/spec': 1.0.0
-      hono: 4.11.3
 
   '@iarna/toml@2.2.5': {}
 
@@ -5557,16 +5515,6 @@ snapshots:
 
   aria-query@5.3.2: {}
 
-  arkregex@0.0.5:
-    dependencies:
-      '@ark/util': 0.56.0
-
-  arktype@2.1.29:
-    dependencies:
-      '@ark/schema': 0.56.0
-      '@ark/util': 0.56.0
-      arkregex: 0.0.5
-
   array-iterate@2.0.1: {}
 
   assertion-error@2.0.1: {}
@@ -6119,8 +6067,8 @@ snapshots:
       haikunator: 2.1.2
       http-proxy-agent: 7.0.2
       ink: 5.2.1(@types/react@19.2.8)(react@18.3.1)
-      ink-select-input: 6.2.0(ink@5.2.1(@types/react@19.2.8)(react@19.2.3))(react@18.3.1)
-      ink-text-input: 6.0.0(ink@5.2.1(@types/react@19.2.8)(react@19.2.3))(react@18.3.1)
+      ink-select-input: 6.2.0(ink@5.2.1(@types/react@19.2.8)(react@18.3.1))(react@18.3.1)
+      ink-text-input: 6.0.0(ink@5.2.1(@types/react@19.2.8)(react@18.3.1))(react@18.3.1)
       inquirer: 9.3.8(@types/node@25.0.8)
       js-base64: 3.7.8
       moment: 2.30.1
@@ -6525,8 +6473,6 @@ snapshots:
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
 
-  hono@4.11.3: {}
-
   html-escaper@2.0.2: {}
 
   html-escaper@3.0.3: {}
@@ -6575,14 +6521,14 @@ snapshots:
 
   ini@1.3.8: {}
 
-  ink-select-input@6.2.0(ink@5.2.1(@types/react@19.2.8)(react@19.2.3))(react@18.3.1):
+  ink-select-input@6.2.0(ink@5.2.1(@types/react@19.2.8)(react@18.3.1))(react@18.3.1):
     dependencies:
       figures: 6.1.0
       ink: 5.2.1(@types/react@19.2.8)(react@18.3.1)
       react: 18.3.1
       to-rotated: 1.0.0
 
-  ink-text-input@6.0.0(ink@5.2.1(@types/react@19.2.8)(react@19.2.3))(react@18.3.1):
+  ink-text-input@6.0.0(ink@5.2.1(@types/react@19.2.8)(react@18.3.1))(react@18.3.1):
     dependencies:
       chalk: 5.6.2
       ink: 5.2.1(@types/react@19.2.8)(react@18.3.1)
