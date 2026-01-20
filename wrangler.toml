@@ -1,12 +1,17 @@
 name = "blocked-and-furious-worker"
 main = "src/functions/effect/adapator/cloudflare/index.ts"
-compatibility_date = "2024-01-01"
+compatibility_date = "2024-09-23"
 
 # KV Namespace bindings
 kv_namespaces = [
   # Replace with actual ID when deploying, or use local simulation
   { binding = "YOU_BLOCKED_ME", id = "e2300056ed654173b72d4acfabbccca7" },
 ]
+
+# Cloudflare Assets (Hosting static files)
+[assets]
+directory = "./dist"
+binding = "ASSETS"
 
 # Environment variables are loaded from .env locally
 # To access them via c.env in Hono
