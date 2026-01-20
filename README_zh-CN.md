@@ -4,6 +4,13 @@
 
 ✨ **预览地址：** [rolshen.xin/notify](https://rolshen.xin/notify)
 
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/shlroland/you-blocked-me)
+
+> **注意**: 部署完成后，请务必前往 **Cloudflare Dashboard > Workers > Settings > Variables** 配置以下环境变量：
+> * `AMAP_SECURITY_KEY`: 你的高德地图 API Key
+> * `SERVER3_SEND_KEY`: Server酱/通知服务 Key
+> * `YOU_BLOCKED_ME`: 请创建一个 KV 命名空间并将其变量名绑定为 `YOU_BLOCKED_ME`
+
 ---
 
 ## 🌟 核心亮点
@@ -58,6 +65,7 @@ pnpm install
 ```bash
 AMAP_SECURITY_KEY=xxx
 SERVER3_SEND_KEY=xxx
+> * `YOU_BLOCKED_ME`: 请创建一个 KV 命名空间并将其变量名绑定为 `YOU_BLOCKED_ME`
 ```
 
 ### 4. 开发指南

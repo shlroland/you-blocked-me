@@ -4,6 +4,13 @@ A modern car-moving notification system built with **Effect-ts**, capable of run
 
 [中文文档](./README_zh-CN.md) | [Live Preview](https://rolshen.xin/notify)
 
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/shlroland/you-blocked-me)
+
+> **Note**: After deployment, please go to **Cloudflare Dashboard > Workers > Settings > Variables** to set:
+> * `AMAP_SECURITY_KEY`: Your Amap (Gaode) API Key
+> * `SERVER3_SEND_KEY`: Your ServerChan/Notification Key
+> * `YOU_BLOCKED_ME`: Create a KV Namespace and bind it to variable name `YOU_BLOCKED_ME`
+
 ---
 
 ## 🌟 Key Highlights
@@ -58,6 +65,7 @@ Copy `.env.example` to `.env` and fill in the necessary information:
 ```bash
 AMAP_SECURITY_KEY=xxx
 SERVER3_SEND_KEY=xxx
+> * `YOU_BLOCKED_ME`: Create a KV Namespace and bind it to variable name `YOU_BLOCKED_ME`
 ```
 
 ### 4. Development
