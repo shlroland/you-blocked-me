@@ -22,8 +22,7 @@ The architecture is designed for extensibility, with support for more Serverless
 *   **Effect**: Core business logic and side-effect management
 *   **Astro 5.0**: High-performance modern Web framework
 *   **React 19 + Tailwind CSS 4**: Fast, beautiful UI construction
-*   **Hono**: Lightweight Web Standard compatible routing
-*   **Arktype**: High-performance runtime type validation
+
 
 ---
 

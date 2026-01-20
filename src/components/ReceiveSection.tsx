@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
-import { client } from '../client'
 import MapContainer from './MapContainer'
 import { generateMapUrls } from '../utils'
 import amapIcon from '../assets/amap.svg'
 import bmapIcon from '../assets/bmap.svg'
 import googleIcon from '../assets/google-map.svg'
 import appleIcon from '../assets/apple-map.svg'
+import { useAtomSet } from '@effect-atom/atom-react'
+import { confirmActionAtom, getNotificationFnAtom } from '../atoms'
+import { NotifyId } from '../functions/schema'
+import * as Exit from 'effect/Exit'
+import * as S from 'effect/Schema'
 
 export default function ReceiveSection() {
   const [requestId, setRequestId] = useState<string | null>(null)
@@ -16,24 +20,27 @@ export default function ReceiveSection() {
   const [confirmed, setConfirmed] = useState(false)
   const [confirming, setConfirming] = useState(false)
 
+  const getNotification = useAtomSet(getNotificationFnAtom, { mode: 'promiseExit' })
+  const confirm = useAtomSet(confirmActionAtom, { mode: 'promiseExit' })
+
   useEffect(() => {
     async function fetchData(targetId: string) {
       try {
-        const res = await client.api['get-location'].$get({ query: { id: targetId } })
-        if (!res.ok) throw new Error('Failed to fetch data')
+        const id = S.decodeUnknownSync(NotifyId)(targetId)
+        const result = await getNotification(id)
 
-        const data = await res.json()
-        // @ts-ignore
-        if (data.lat && data.lng) {
-          // @ts-ignore
-          setRequesterLocation({ lat: data.lat, lng: data.lng })
+        if (Exit.isSuccess(result)) {
+          const data = result.value
+          if (data.location) {
+            setRequesterLocation(data.location)
+          }
+          if (data.message) {
+            setMessage(data.message)
+          }
+          setLoading(false)
+        } else {
+          throw new Error('Failed to fetch data')
         }
-        // @ts-ignore
-        if (data.message) {
-          // @ts-ignore
-          setMessage(data.message)
-        }
-        setLoading(false)
       } catch (err) {
         console.error(err)
         setError('无法加载请求信息')
@@ -58,11 +65,10 @@ export default function ReceiveSection() {
     setConfirming(true)
 
     try {
-      const res = await client.api['owner-confirm'].$post({
-        json: { id: requestId },
-      })
+      const id = S.decodeUnknownSync(NotifyId)(requestId)
+      const result = await confirm(id)
 
-      if (res.ok) {
+      if (Exit.isSuccess(result)) {
         setConfirmed(true)
       } else {
         throw new Error('Confirm failed')
