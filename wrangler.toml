@@ -1,4 +1,4 @@
-name = "blocked-and-furious-worker"
+name = "you-blocked-me"
 main = "src/functions/effect/adapator/cloudflare/index.ts"
 compatibility_date = "2024-09-23"
 
